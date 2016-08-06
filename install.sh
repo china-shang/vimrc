@@ -14,6 +14,7 @@ cd vim
 make VIMRUNTIMEDIR=/usr/share/vim/vim74
 make install
 echo "vim has been installed"
+cd ..
 cp .* ~/
 vim -c BundleInstall
 apt-get install clang -y

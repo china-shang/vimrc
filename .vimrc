@@ -1,46 +1,46 @@
-nmap gc :close<cr>
-inoremap <c-d> <esc>$a
-inoremap <c-f> <esc>$a;<esc>
+nmap gc :close<CR>
+inoremap <C-D> <ESC>$a
+inoremap <C-F> <ESC>$a;<ESC>
 :silent !echo -ne "\e]12;IndianRed2\007"
 "let &t_SI = "\e]12;RoyalBlue1\007"
 let &t_SI = "\e]12;green\007"
 let &t_EI = "\e]12;IndianRed2\007"
 autocmd VimLeave * :!echo -ne "\e]12;grey\007"
 nnoremap <silent>gf :YcmCompleter GoToDefinition<CR>
-nnoremap <silent>gh :YcmCompleter GoToInclude<cr>
-nnoremap <silent>gd :YcmCompleter GoToDeclaration<cr>
-nnoremap <silent>gp :YcmCompleter GetParent<cr>
-nnoremap <silent>gt :YcmCompleter GetType<cr>
-nnoremap <silent>gw :YcmDiags<cr>
+nnoremap <silent>gh :YcmCompleter GoToInclude<CR>
+nnoremap <silent>gd :YcmCompleter GoToDeclaration<CR>
+nnoremap <silent>gp :YcmCompleter GetParent<CR>
+nnoremap <silent>gt :YcmCompleter GetType<CR>
+nnoremap <silent>gw :YcmDiags<CR>
 let mapleader = ","
 set t_Co=256
-nmap gm :call Valgrind()<cr>
+nmap gm :call Valgrind()<CR>
 nnoremap /N  :nohlsearch<CR>
-nmap uc :exec"!cp ~/.ycm_extra_conf_c.py ~/.ycm_extra_conf.py"<cr>
-nmap ucc :exec"!cp ~/.ycm_extra_conf_cpp.py ~/.ycm_extra_conf.py"<cr>
+nmap uc :exec"!cp ~/.ycm_extra_conf_c.py ~/.ycm_extra_conf.py"<CR>
+nmap ucc :exec"!cp ~/.ycm_extra_conf_cpp.py ~/.ycm_extra_conf.py"<CR>
 "nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 "nmap \ \c
 vmap \ \cc
 nmap tt :%s/\t/    /g<CR>
 map <S-Left> :tabp<CR>
 map <S-Right> :tabn<CR>
-map! <C-Z> <Esc>zzi
+map! <C-Z> <ESC>zzi
 "map! <C-O> <C-Y>,
 "map <C-A> ggVG$"+y
-nmap <c-e> $
+nmap <C-E> $
 nmap <C-A> ^
-nnoremap <F12>  :call Clean()<cr><cr><f6><cr><cr>
-"map <C-w> <C-w>
-imap <C-k> <C-y>,
-"imap <C-t> <C-q><TAB>
-imap <C-t> <TAB>
-imap <C-j> <ESC>
-imap <C-v> <ESC><ESC>"*pa
-"map <C-v> <Esc>"*pa
-imap <C-a> <Esc>^
-imap <C-e> <Esc>$
-vmap <C-y> "+y
-noremap <C-c> <esc>
+nnoremap <F12>  :call Clean()<CR><cr><f6><cr><cr>
+"map <C-W> <C-W>
+imap <C-K> <C-Y>,
+"imap <C-T> <C-Q><TAB>
+imap <C-T> <TAB>
+imap <C-J> <ESC>
+imap <C-V> <ESC><ESC>"*pa
+"map <C-V> <ESC>"*pa
+imap <C-A> <ESC>^
+imap <C-E> <ESC>$
+vmap <C-Y> "+y
+noremap <C-C> <ESC>
 nnoremap <F2> :g/^\s*$/d<CR> 
 nnoremap <C-F2> :vert diffsplit 
 map <F3> :NERDTreeToggle<CR>
@@ -50,23 +50,23 @@ nmap <C-F5> :call OnlyComp()<CR>
 nmap <F4> :call CompileRunclang()<CR>
 map <F8> :call Rungdb()<CR>
 map <F6> :call FormartSrc()<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-"nmap tl :Tlist<cr>
-nmap q! :q!<cr>
-nmap <F7> :split<cr>
-nmap <S-F7> :vsplit<cr>
+inoremap } <C-R>=ClosePair('}')<CR>
+"nmap tl :Tlist<CR>
+nmap q! :q!<CR>
+nmap <F7> :split<CR>
+nmap <S-F7> :vsplit<CR>
 nmap <space> [i
 "nmap 9 $
-nnoremap // ^i//<esc>j
-nmap <enter> a<enter><esc>
-nmap <F5> :call RUNexe()<cr><cr>
-nmap <s-f5> :call RUNexe()<cr>
-"nmap <tab> i<tab><esc>
+nnoremap // ^i//<ESC>j
+nmap <enter> a<enter><ESC>
+nmap <F5> :call RUNexe()<CR><cr>
+nmap <S-f5> :call RUNexe()<CR>
+"nmap <tab> i<tab><ESC>
 nmap \\ $a//
 set sw=4
 set ts=4
-nnoremap tp :bp <cr> 
-nnoremap tn :bn <cr> 
+nnoremap tp :bp <CR> 
+nnoremap tn :bn <CR> 
 nnoremap td :bd
 set et
 set smarttab
@@ -234,9 +234,9 @@ set mouse=v
 set clipboard=unnamed
 "去空行  
 "比较文件  
-"nnoremap <Leader>fu :CtrlPFunky<Cr>
-nnoremap <C-n> :CtrlPFunky<Cr>
-nnoremap <Leader>fu :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"nnoremap <Leader>fu :CtrlPFunky<CR>
+nnoremap <C-N> :CtrlPFunky<CR>
+nnoremap <Leader>fu :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
 "列出当前目录文件  
@@ -307,7 +307,7 @@ endfunc
 "C,C++运行
 func RUN()
     if g:isgui==0 
-        exec"call RUNexe()<cr><cr>"
+        exec"call RUNexe()<CR><cr>"
     endif
 endfunc
 func RUNexe()
@@ -382,7 +382,7 @@ autocmd vimenter * if !argc() | NERDTree | endif
 " 设置当文件被改动时自动载入
 set autoread
 " quickfix模式
-autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+autocmd FileType c,cpp map <buffer> <leader><space> :w<CR>:make<cr>
 "代码补全 preview
 "set completeopt=menu 
 "允许插件  
@@ -437,10 +437,10 @@ set scrolloff=3
 " 为C程序提供自动缩进
 "自动补全
 inoremap ( ()<ESC>i
-inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap ) <C-R>=ClosePair(')')<CR>
 inoremap { {<CR>}<ESC>O
 inoremap [ []<ESC>i
-inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap ] <C-R>=ClosePair(']')<CR>
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
 function! ClosePair(char)
@@ -592,12 +592,12 @@ let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
 set completeopt=preview,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	"回车即选中当前项
+inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"	"回车即选中当前项
 "上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
  
 Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'

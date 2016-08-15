@@ -1,4 +1,5 @@
 nmap gc :close<CR>
+nmap cx xa
 inoremap <C-D> <ESC>$a
 inoremap <C-F> <ESC>$a;<ESC>
 :silent !echo -ne "\e]12;IndianRed2\007"
@@ -57,8 +58,8 @@ nmap <F7> :split<CR>
 nmap <S-F7> :vsplit<CR>
 nmap <space> [i
 "nmap 9 $
-nnoremap // ^i//<ESC>j
-nmap <enter> a<enter><ESC>
+nmap // ^i//<ESC>j
+nmap <enter> i<enter><ESC>
 nmap <F5> :call RUNexe()<CR><cr>
 nmap <S-f5> :call RUNexe()<CR>
 "nmap <tab> i<tab><ESC>
@@ -320,6 +321,8 @@ func RUNexe()
         endif
     elseif &filetype == 'python' 
         exec "!python %"
+    elseif &filetype == 'sh'
+        exec "!sh %"
     endif
 endfunc
 "C,C++的调试
@@ -459,7 +462,7 @@ let Tlist_Compart_Format = 1    " 压缩方式
 let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
 let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
 "let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
-"let Tlist_Show_One_File=0            "不同时显示多个文件的tag，只显示当前文件的
+let Tlist_Show_One_File=0            "不同时显示多个文件的tag，只显示当前文件的
 "设置tags  
 set tags=tags;  
 set autochdir 
@@ -612,6 +615,7 @@ Bundle 'L9'
 Bundle 'majutsushi/tagbar'
 Bundle 'FuzzyFinder'
 Bundle 'https://github.com/wincent/command-t.git'
+Bundle 'https://github.com/davidhalter/jedi-vim.git'
 Bundle 'Auto-Pairs'
 Bundle 'python-imports.vim'
 Bundle 'CaptureClipboard'
@@ -680,7 +684,7 @@ au InsertLeave * hi statusline guibg=orange guifg=white
 hi YcmWarningSection  term=bold ctermfg=11 gui=bold guifg=Yellow
 hi Function  term=bold ctermfg=121 gui=bold guifg=SeaGreen
 "颜色
-hi linenr ctermfg = 10
+hi linenr ctermfg = 214
 let g:indent_guides_auto_colors = 1
 
 let g:indent_guides_guide_size = 1 
@@ -753,3 +757,7 @@ let g:quickrun_no_default_key_mappings = 1
 nmap <Leader>r <Plug>(quickrun)
 map <F9> :QuickRun<CR>
 set relativenumber
+let NERDTreeWinSize=29
+    
+let g:tagbar_bin='ctags'
+let g:tagbar_width=32

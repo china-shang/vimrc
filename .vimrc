@@ -277,7 +277,7 @@ func! CompileRunclang()
     elseif &filetype == 'sh'
         :!time bash %
     elseif &filetype == 'python'
-        "        exec "!time python2.7 %"
+        "        exec "!time python3 %"
     elseif &filetype == 'html'
         exec "!firefox % &"
     elseif &filetype == 'go'
@@ -320,7 +320,7 @@ func RUNexe()
             exec "!time ./" g:exename
         endif
     elseif &filetype == 'python' 
-        exec "!python %"
+        exec "!python3 %"
     elseif &filetype == 'sh'
         exec "!sh %"
     endif
@@ -602,7 +602,7 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
  
-Bundle 'jsbeautify'
+"Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'
 Bundle 'django_templates.vim'
 Bundle 'Django-Projects'
@@ -625,7 +625,7 @@ Bundle 'last_edit_marker.vim'
 Bundle 'synmark.vim'
 Bundle 'SQLComplete.vim'
 Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
-Bundle 'jslint.vim'
+"Bundle 'jslint.vim'
 Bundle "pangloss/vim-javascript"
 Bundle 'Vim-Script-Updater'
 Bundle 'scrooloose/nerdcommenter'
@@ -684,6 +684,7 @@ au InsertLeave * hi statusline guibg=orange guifg=white
 hi YcmWarningSection  term=bold ctermfg=11 gui=bold guifg=Yellow
 hi Function  term=bold ctermfg=121 gui=bold guifg=SeaGreen
 "颜色
+hi Function ctermfg=178
 hi linenr ctermfg = 214
 let g:indent_guides_auto_colors = 1
 
@@ -696,6 +697,8 @@ autocmd GUIEnter * colorscheme solarized
 hi statusline ctermbg=39 ctermfg=241
 hi IndentGuidesOdd guibg=red ctermbg=3
 hi IndentGuidesEven guibg=green ctermbg=4
+hi type ctermfg=167
+"209 
 "highlight Functions
 hi statuslineNC ctermfg=8
 se mps-="[:]"
@@ -761,3 +764,5 @@ let NERDTreeWinSize=29
     
 let g:tagbar_bin='ctags'
 let g:tagbar_width=32
+hi comment ctermfg=141
+hi Identi ctermfg=39

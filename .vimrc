@@ -258,7 +258,7 @@ let Lib = " "
 let exename = 1
 func! CompileRunclang()
     exec "w"
-    exec "!date"
+    exec '!date +\%T'
     if &filetype == 'c'
         if g:exename == 1
             exec "!clang % -o %< -Wextra -g -Wall" g:Lib
@@ -290,7 +290,7 @@ func! CompileRunclang()
 endfunc
 func OnlyComp()
     exec"w"
-    exec "!date"
+    exec '!date +\%T'
     if &filetype == 'c'
         exec "!clang % -c -Wall -Wextra -g " g:Lib 
     endif
@@ -312,7 +312,7 @@ func RUN()
     endif
 endfunc
 func RUNexe()
-    exec "!date"
+    exec '!date +\%T'
     if &filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c'
         if g:exename == 1
             exec "!time ./%<" 
@@ -322,12 +322,14 @@ func RUNexe()
     elseif &filetype == 'python' 
         exec "!python3 %"
     elseif &filetype == 'sh'
-        exec "!sh %"
+        exec "!bash %"
+    elseif &filetype == 'javascript'
+        exec "!node %"
     endif
 endfunc
 "C,C++的调试
 func! Rungdb()
-    exec "!date"
+    exec '!date +\%T'
     if g:exename == 1
         exec "!gdb ./%<"
     else 
@@ -652,7 +654,7 @@ map <Leader><Leader>j <Plug>(easymotion-j)
 map <Leader><Leader>k <Plug>(easymotion-k)
 map <Leader><leader>l <Plug>(easymotion-lineforward)
 "unmap ,,s
-"map <leader>s <Plug>(easymotion-prefix)
+"map <leader>r <Plug>(easymotion-prefix)
 " 重复上一次操作, 类似repeat插件, 很强大
 map <Leader><leader>. <Plug>(easymotion-repeat)
 colors Blue2

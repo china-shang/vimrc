@@ -109,13 +109,13 @@ set go=             " 不要图形按钮
 "color ron     " 设置背景主题  
 "color torte    " 设置背景主题  
 set guifont=Courier_New:h10:cANSI   " 设置字体  
-autocmd InsertLeave * se nocul  " 用浅色高亮当前行  
-autocmd InsertEnter * se cul    " 用浅色高亮当前行  
+autocmd InsertLeave * se cul  " 用浅色高亮当前行  
+autocmd InsertEnter * se nocul    " 用浅色高亮当前行  
 set ruler           " 显示标尺  
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
+    
 set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
 "set statusline=%F%m%r%h%w\ \ \ \ \ \ [POS=%l,%v]\ [%p%%]\ %{strftime(\"\ -\ %H:%M:%S\")}   "状态行显示的内容  
-"set statusline=%F%m%r%h%w\ %Y\ [%l\,%v]\ %p%%\ %{mode()}%{strftime(\"\ -\ %H:%M\")}   "状态行显示的内容  
 set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
 set foldenable      " 允许折叠  
 "set foldmethod=   " 折叠  
@@ -167,6 +167,10 @@ au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{js}   set filetype=javascript
 "rkdown to HTML  
 "nmap Fi :!firefox &   <CR><CR>
+"   
+"       
+"           
+"               
 "将tab替换为空格
 
 
@@ -201,7 +205,6 @@ func SetTitle()
         "        call append(line(".")+2, "    > : ") 
         call append(line(".")+1, "    > Created Time: ".strftime("%c")) 
         call append(line(".")+2, " ************************************************************************/") 
-        call append(line(".")+3, "")
     endif
     if expand("%:e") == 'cpp'
         call append(line(".")+3, "#include<iostream>")
@@ -382,7 +385,7 @@ endif
 "当打开vim且没有文件时自动打开NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
 " 只剩 NERDTree时自动关闭
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 " 设置当文件被改动时自动载入
 set autoread
@@ -595,9 +598,9 @@ let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
 let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
-set completeopt=preview,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
-inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"	"回车即选中当前项
+set completeopt=preview,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
+inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
 "上下左右键的行为 会显示其他信息
 inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
@@ -737,9 +740,28 @@ set showcmd         " 输入的命令显示出来，看的清楚些
     let g:indent_guides_guide_size=1
     " 快捷键 i 开/关缩进可视化
 :nmap  gz <Plug>IndentGuidesToggle
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+func Mode()
+    if mode() == 'n'
+        return "NORMAL"
+    endif
+    if mode() == 'i'
+        return "INSERT"
+    endif
+    if mode() == 'v'
+        return "VISUAL"
+    endif
+    if mode() == 'V'
+    return "V-LINE"
+    endif
+    if mode() == 'V'
+        return "V-BLCK"
+    endif
+    return mode("fji")
+endfunc
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
+set statusline=%F%m%r%h%w\ \ \ %Y\ \ \ %{Mode()}\ \ \ \ \ [%l\,%v]\ \ \ %p%%\ %{strftime(\"\ -\ %H:%M\")}   "状态行显示的内容  
 let g:quickrun_config = {
 \   "_" : {
 \       "outputter" : "message",
@@ -765,6 +787,8 @@ set relativenumber
 let NERDTreeWinSize=29
     
 let g:tagbar_bin='ctags'
+hi CursorLine ctermbg=238
 let g:tagbar_width=32
 hi comment ctermfg=141
 hi Identi ctermfg=39
+hi string ctermfg=6

@@ -60,7 +60,7 @@ nmap <space> [i
 "nmap 9 $
 nmap // ^i//<ESC>j
 nmap <enter> i<enter><ESC>
-nmap <F5> :call RUNexe()<CR><cr>
+nmap <F5> :call RUNexe()<CR>
 nmap <S-f5> :call RUNexe()<CR>
 "nmap <tab> i<tab><ESC>
 nmap \\ $a//
@@ -315,28 +315,28 @@ func RUN()
     endif
 endfunc
 func RUNexe()
-    exec '!date +\%T'
+    "exec '!date +\%T'
     if &filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c'
         if g:exename == 1
-            exec "!time ./%<" 
+            exec '!date +\%T&&printf "\n\n"&&time ' "./%<" 
         else 
-            exec "!time ./" g:exename
+            exec '!date +\%T&&printf "\n\n"&&time ./' g:exename
         endif
     elseif &filetype == 'python' 
-        exec "!python3 %"
+        exec '!date +\%T&&printf "\n\n"&&python3'" %"
     elseif &filetype == 'sh'
-        exec "!bash %"
+        exec '!date +\%T&&printf "\n\n"&&bash '"%"
     elseif &filetype == 'javascript'
-        exec "!node %"
+        exec '!date +\%T&&printf "\n\n"&&node '"%"
     endif
 endfunc
 "C,C++的调试
 func! Rungdb()
-    exec '!date +\%T'
+    "exec '!date +\%T'
     if g:exename == 1
-        exec "!gdb ./%<"
+        exec '!date +\%T&&printf "\n\n"&&gdb '"./%<"
     else 
-        exec "!gdb ./" exename
+        exec '!date +\%T&&printf "\n\n"&&gdb '"./" g:exename
     endif
 endfunc
 
@@ -585,12 +585,12 @@ set statusline+=%*
 let g:ycm_semantic_triggers = {}
 " 引入 C++ 标准库tags
 set tags+=/data/misc/software/misc./vim/stdcpp.tags
-let g:ycm_semantic_triggers.c = ['->', '.', '&']
+let g:ycm_semantic_triggers.c = ['->', '.',]
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '<<'
 let g:ycm_error_symbol = '>>'
 let g:ycm_add_preview_to_completeopt = 0
-let g:ycm_autoclose_preview_window_after_insertion = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_max_diagnostics_to_display = 40
 let g:ycm_min_num_of_chars_for_completion=2
 " 禁止缓存匹配项,每次都重新生成匹配项
@@ -598,7 +598,8 @@ let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
 let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
-set completeopt=preview,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+"set completeopt=preview,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
 inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
 "上下左右键的行为 会显示其他信息
@@ -792,3 +793,24 @@ let g:tagbar_width=32
 hi comment ctermfg=141
 hi Identi ctermfg=39
 hi string ctermfg=6
+"let g:jedi#auto_initialization = 1
+"let g:jedi#auto_vim_configuration = 1
+"let g:jedi#use_tabs_not_buffers = 1
+"let g:jedi#use_splits_not_buffers = "left"
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#popup_select_first = 0
+"let g:jedi#show_call_signatures = "1"
+
+"let g:jedi#goto_command = "<leader>d"
+"let g:jedi#goto_assignments_command = "<leader>g"
+"let g:jedi#goto_definitions_command = ""
+"let g:jedi#documentation_command = "K"
+"let g:jedi#usages_command = "<leader>n"
+"let g:jedi#completions_command = "<C-Space>"
+"let g:jedi#rename_command = "<leader>r"
+
+let g:ycm_python_binary_path = '/usr/bin/python3.5'
+
+
+
+

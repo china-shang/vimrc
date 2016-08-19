@@ -10,9 +10,9 @@ apt-get remove vim-gui-common  -y
 apt-get install ctags -y
 git clone https://github.com/vim/vim.git
 cd vim
-./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-i386-linux-gnu/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp --enable-multibyte --prefix=/usr
+./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp --with-python-config-dir=/usr/lib/python2.7/config-i386-linux-gnu/ --enable-perlinterp --enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp --enable-multibyte --prefix=/usr/local/vim
 make VIMRUNTIMEDIR=/usr/share/vim/vim74
-make install
+ake install
 echo "vim has been installed"
 cd ..
 rm ~/.vimrc

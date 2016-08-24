@@ -24,6 +24,7 @@ import ycm_core
 flags = [
 '-Wall',
 '-Wextra',
+'-Wno-unused-variable',
 #'-Werror',
 '-Wno-unused-value',
 '-fexceptions',

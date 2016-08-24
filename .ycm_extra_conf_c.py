@@ -26,6 +26,7 @@ flags = [
 '-Wextra',
 #'-Werror',
 '-fexceptions',
+'-Wno-unused-variable',
 '-DNDEBUG',
 '-Wno-unused-value',
 # THIS IS IMPORTANT! Without a "-std=<something>" flag, clang won't know which

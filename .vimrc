@@ -1,5 +1,11 @@
 nmap gc :close<CR>
 nmap cx xa
+nnoremap <c-w> <c-w><c-w>
+nnoremap <c-j> <c-w><c-j>
+nnoremap <c-k> <c-w><c-k>
+nnoremap <c-h> <c-w><c-h>
+nnoremap <c-l> <c-w><c-l>
+
 inoremap <C-D> <ESC>$a
 inoremap <C-F> <ESC>$a;<ESC>
 :silent !echo -ne "\e]12;IndianRed2\007"
@@ -9,6 +15,7 @@ let &t_EI = "\e]12;IndianRed2\007"
 autocmd VimLeave * :!echo -ne "\e]12;grey\007"
 nnoremap <silent>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <silent>gh :YcmCompleter GoToInclude<CR>
+nmap <silent> <Leader>gh :FSHere<cr>
 nnoremap <silent>gd :YcmCompleter GoToDeclaration<CR>
 nnoremap <silent>gp :YcmCompleter GetParent<CR>
 nnoremap <silent>gt :YcmCompleter GetType<CR>
@@ -19,6 +26,8 @@ nmap gm :call Valgrind()<CR>
 nnoremap /N  :nohlsearch<CR>
 nmap uc :exec"!cp ~/.ycm_extra_conf_c.py ~/.ycm_extra_conf.py"<CR>
 nmap ucc :exec"!cp ~/.ycm_extra_conf_cpp.py ~/.ycm_extra_conf.py"<CR>
+nmap uqt :exec"!cp ~/.ycm_extra_conf_qt.py ~/.ycm_extra_conf.py"<cr>
+
 "nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
 "nmap \ \c
 vmap \ \cc
@@ -207,12 +216,12 @@ func SetTitle()
         call append(line(".")+2, " ************************************************************************/") 
     endif
     if expand("%:e") == 'cpp'
-        call append(line(".")+3, "#include<iostream>")
+        call append(line(".")+3, "#include <iostream>")
         call append(line(".")+4, "using namespace std;")
         call append(line(".")+5, "")
     endif
     if &filetype == 'c'
-        call append(line(".")+3, "#include<stdio.h>")
+        call append(line(".")+3, "#include <stdio.h>")
         call append(line(".")+4, "")
     endif
     if expand("%:e") == 'h'
@@ -262,7 +271,9 @@ let exename = 1
 func! CompileRunclang()
     exec "w"
     exec '!date +\%T'
-    if &filetype == 'c'
+    if g:qt == 1 
+        exec "!make "
+    elseif &filetype == 'c'
         if g:exename == 1
             exec "!clang % -o %< -Wextra -g -Wall" g:Lib
         else 
@@ -316,7 +327,9 @@ func RUN()
 endfunc
 func RUNexe()
     "exec '!date +\%T'
-    if &filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c'
+    if g:qt == 1 
+        exec "!./qt "
+    elseif &filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c'
         if g:exename == 1
             exec '!date +\%T&&printf "\n\n"&&time ' "./%<" 
         else 
@@ -328,6 +341,8 @@ func RUNexe()
         exec '!date +\%T&&printf "\n\n"&&bash '"%"
     elseif &filetype == 'javascript'
         exec '!date +\%T&&printf "\n\n"&&node '"%"
+    elseif &filetype == 'html'
+        exec "!firefox % &"
     endif
 endfunc
 "C,C++的调试
@@ -461,16 +476,16 @@ endfunction
 set completeopt=longest,menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let Tlist_Sort_Type = "name"    " 按照名称排序  
-let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
-let Tlist_Compart_Format = 1    " 压缩方式  
-let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
-let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
-"let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
-let Tlist_Show_One_File=0            "不同时显示多个文件的tag，只显示当前文件的
-"设置tags  
-set tags=tags;  
-set autochdir 
+"let Tlist_Sort_Type = "name"    " 按照名称排序  
+"let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
+"let Tlist_Compart_Format = 1    " 压缩方式  
+"let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
+"let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
+""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
+"let Tlist_Show_One_File=0            "不同时显示多个文件的tag，只显示当前文件的
+""设置tags  
+"set tags=tags;  
+"set autochdir 
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -524,7 +539,7 @@ call vundle#rc()
 " non github repos
 "Bundle 'Python-mode-klen'
 "Bundle 'JavaScript-Indent'
-"Bundle 'Better-Javascript-Indentation'
+Bundle 'Better-Javascript-Indentation'
 
 "django
 
@@ -553,9 +568,9 @@ let g:tagbar_autofocus = 1
     "\ ]
 "\ }
 "ctrlp设置
-let g:ctrlp_map = '<leader>p'
+let g:ctrlp_map = '<leader>f'
 let g:ctrlp_cmd = 'CtrlP'
-map <leader>f :CtrlPMRU<CR>
+map <leader>p :CtrlPMRU<CR>
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
     \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
@@ -585,20 +600,19 @@ set statusline+=%*
 let g:ycm_semantic_triggers = {}
 " 引入 C++ 标准库tags
 set tags+=/data/misc/software/misc./vim/stdcpp.tags
-let g:ycm_semantic_triggers.c = ['->', '.',]
+let g:ycm_semantic_triggers.c = ['->', '.']
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '<<'
 let g:ycm_error_symbol = '>>'
 let g:ycm_add_preview_to_completeopt = 0
 "let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_max_diagnostics_to_display = 40
-let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_max_diagnostics_to_display = 60
+"let g:ycm_min_num_of_chars_for_completion=0
 " 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
 let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
-"set completeopt=preview,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
 inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
@@ -608,9 +622,12 @@ inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
  
-"Bundle 'jsbeautify'
+Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'
+Plugin 'octol/vim-cpp-enhanced-highlight'
 Bundle 'django_templates.vim'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'othree/html5.vim'
 Bundle 'Django-Projects'
 Plugin 'Chiel92/vim-autoformat'
 Bundle 'gmarik/vundle'
@@ -810,7 +827,16 @@ hi string ctermfg=6
 "let g:jedi#rename_command = "<leader>r"
 
 let g:ycm_python_binary_path = '/usr/bin/python3.5'
+let g:html5_event_handler_attributes_complete = 0
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_microdata_attributes_complete = 0
 
+let g:html5_aria_attributes_complete = 0
+" 开启保存 undo 历史功能
+" th
+set undofile
+" undo 历史保存路径
+set undodir=~/tmp/.undo_history/
 
-
-
+"hi pmenu ctermbg=23
+"hi pmenusel ctermbg=232

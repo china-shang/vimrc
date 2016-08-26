@@ -75,19 +75,19 @@ flags = [
 
 '-Wextra',
 
-'-fPIE',
+#'-fPIE',
 
-'-D_REENTRANT',
+#'-D_REENTRANT',
 
-'-std=c++1y',
+'-std=c++11',
 
-'-stdlib=libc++',
+#'-stdlib=libc++',
 
-'-ftemplate-depth=8192',
+#'-ftemplate-depth=8192',
 
-'-fconstexpr-depth=8192',
+#'-fconstexpr-depth=8192',
 
-'-lc++abi',
+#'-lc++abi',
 
 '-isystem', '/usr/include/c++/v1',
 

@@ -1,5 +1,5 @@
 nmap gc :close<CR>
-nmap cx xa
+nmap cx xi
 nnoremap <c-w> <c-w><c-w>
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
@@ -38,7 +38,7 @@ map! <C-Z> <ESC>zzi
 "map! <C-O> <C-Y>,
 "map <C-A> ggVG$"+y
 nmap <C-E> $
-nmap <C-A> ^
+"nmap <C-A> ^
 nnoremap <F12>  :call Clean()<CR><cr><f6><cr><cr>
 "map <C-W> <C-W>
 imap <C-K> <C-Y>,
@@ -47,7 +47,7 @@ imap <C-T> <TAB>
 imap <C-J> <ESC>
 imap <C-V> <ESC><ESC>"*pa
 "map <C-V> <ESC>"*pa
-imap <C-A> <ESC>^
+"imap <C-A> <ESC>^
 imap <C-E> <ESC>$
 vmap <C-Y> "+y
 noremap <C-C> <ESC>
@@ -80,7 +80,7 @@ nnoremap tn :bn <CR>
 nnoremap td :bd
 set et
 set smarttab
-set smartindent
+"set smartindent
 set lbr
 set fo+=mB
 set sm
@@ -107,7 +107,8 @@ set rtp+=$GOROOT/misc/vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nocompatible
 syntax enable
 syntax on 
 set cuc
@@ -118,6 +119,7 @@ set go=             " 不要图形按钮
 "color ron     " 设置背景主题  
 "color torte    " 设置背景主题  
 set guifont=Courier_New:h10:cANSI   " 设置字体  
+let g:qt=0
 autocmd InsertLeave * se cul  " 用浅色高亮当前行  
 autocmd InsertEnter * se nocul    " 用浅色高亮当前行  
 set ruler           " 显示标尺  
@@ -135,8 +137,7 @@ if version >= 60
     set encoding=utf-8
 endif
 " 自动缩进
-set autoindent
-set cindent
+"set autoindent
 " Tab键的宽度
 set tabstop=4
 " 统一缩进为4
@@ -188,7 +189,14 @@ au BufRead,BufNewFile *.{js}   set filetype=javascript
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
+autocmd BufReadPost *.pro exec ":call Setqt()"
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+func Setqt()
+    let str = getline("$")
+    if str != "QT += widgets"
+        call append(line("$"),"QT += widgets")
+    endif
+endfunc
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
     "如果文件类型为.sh文件 
@@ -215,7 +223,9 @@ func SetTitle()
         call append(line(".")+1, "    > Created Time: ".strftime("%c")) 
         call append(line(".")+2, " ************************************************************************/") 
     endif
-    if expand("%:e") == 'cpp'
+    if g:qt == 1
+        exec ""
+    elseif expand("%:e") == 'cpp'
         call append(line(".")+3, "#include <iostream>")
         call append(line(".")+4, "using namespace std;")
         call append(line(".")+5, "")
@@ -267,6 +277,7 @@ func Clean()
 endfunc
 "C，C++ 按F5编译运行
 let Lib = " "
+let makeprg="clang\ %\ -o\ %< -Wextra\ -g\ -Wall"
 let exename = 1
 func! CompileRunclang()
     exec "w"
@@ -355,6 +366,7 @@ func! Rungdb()
     endif
 endfunc
 
+map <C-F5> <F4><CR><F5>
 
 "代码格式优化化
 
@@ -407,7 +419,8 @@ set autoread
 " quickfix模式
 autocmd FileType c,cpp map <buffer> <leader><space> :w<CR>:make<cr>
 "代码补全 preview
-"set completeopt=menu 
+"set 
+"completeopt=menu 
 "允许插件  
 filetype plugin on
 "共享剪贴板  
@@ -473,7 +486,7 @@ function! ClosePair(char)
     endif
 endfunction
 "打开文件类型检测, 加了这句才可以用智能补全
-set completeopt=longest,menu
+"set completeopt=longest,menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "let Tlist_Sort_Type = "name"    " 按照名称排序  
@@ -540,6 +553,7 @@ call vundle#rc()
 "Bundle 'Python-mode-klen'
 "Bundle 'JavaScript-Indent'
 Bundle 'Better-Javascript-Indentation'
+Bundle 'kywind3000/asyncrun.vim' 
 
 "django
 
@@ -613,7 +627,6 @@ let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
 let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
-set completeopt=longest,menu    "让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
 inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
 "上下左右键的行为 会显示其他信息
@@ -625,6 +638,7 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
 Bundle 'jsbeautify'
 Bundle 'The-NERD-Commenter'
 Plugin 'octol/vim-cpp-enhanced-highlight'
+"Plugin 'artur-shaik/vim-javacomplete2'
 Bundle 'django_templates.vim'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'othree/html5.vim'
@@ -640,7 +654,7 @@ Bundle 'FuzzyFinder'
 Bundle 'https://github.com/wincent/command-t.git'
 Bundle 'https://github.com/davidhalter/jedi-vim.git'
 Bundle 'Auto-Pairs'
-Bundle 'python-imports.vim'
+"Bundle 'python-imports.vim'
 Bundle 'CaptureClipboard'
 Plugin 'thinca/vim-quickrun'
 Bundle 'ctrlp-modified.vim'
@@ -728,29 +742,29 @@ se mps-="[:]"
 se showmode
 se mps+="=:;"
 set showcmd         " 输入的命令显示出来，看的清楚些  
-    let g:SignatureMap = {
-            \ 'Leader'             :  "m",
-            \ 'PlaceNextMark'      :  "m,",
-            \ 'ToggleMarkAtLine'   :  "m.",
-            \ 'PurgeMarksAtLine'   :  "m-",
-            \ 'DeleteMark'         :  "dm",
-            \ 'PurgeMarkers'       :  "m<BS>",
-            \ 'PurgeMarks'         :  "mda",
-            \ 'GotoNextLineAlpha'  :  "']",
-            \ 'GotoPrevLineAlpha'  :  "'[",
-            \ 'GotoNextSpotAlpha'  :  "`]",
-            \ 'GotoPrevSpotAlpha'  :  "`[",
-            \ 'GotoNextLineByPos'  :  "]'",
-            \ 'GotoPrevLineByPos'  :  "['",
-            \ 'GotoNextSpotByPos'  :  "mn",
-            \ 'GotoPrevSpotByPos'  :  "mp",
-            \ 'GotoNextMarker'     :  "[+",
-            \ 'GotoPrevMarker'     :  "[-",
-            \ 'GotoNextMarkerAny'  :  "]=",
-            \ 'GotoPrevMarkerAny'  :  "[=",
-            \ 'ListLocalMarks'     :  "ms",
-            \ 'ListLocalMarkers'   :  "m?"
-            \ }
+    "let g:SignatureMap = {
+            "\ 'Leader'             :  "m",
+            "\ 'PlaceNextMark'      :  "m,",
+            "\ 'ToggleMarkAtLine'   :  "m.",
+            "\ 'PurgeMarksAtLine'   :  "m-",
+            "\ 'DeleteMark'         :  "dm",
+            "\ 'PurgeMarkers'       :  "m<BS>",
+            "\ 'PurgeMarks'         :  "mda",
+            "\ 'GotoNextLineAlpha'  :  "'[",
+            "\ 'GotoPrevLineAlpha'  :  "']",
+            "\ 'GotoNextSpotAlpha'  :  "`[",
+            "\ 'GotoPrevSpotAlpha'  :  "`]",
+            "\ 'GotoNextLineByPos'  :  "['",
+            "\ 'GotoPrevLineByPos'  :  "]'",
+            "\ 'GotoNextSpotByPos'  :  "mn",
+            "\ 'GotoPrevSpotByPos'  :  "mp",
+            "\ 'GotoNextMarker'     :  "[+",
+            "\ 'GotoPrevMarker'     :  "[-",
+            "\ 'GotoNextMarkerAny'  :  "]=",
+            "\ 'GotoPrevMarkerAny'  :  "[=",
+            "\ 'ListLocalMarks'     :  "ms",
+            "\ 'ListLocalMarkers'   :  "m?"
+            "\ }
  let g:indent_guides_enable_on_vim_startup=0
     " 从第二层开始可视化显示缩进
     let g:indent_guides_start_level=1
@@ -833,10 +847,16 @@ let g:html5_microdata_attributes_complete = 0
 
 let g:html5_aria_attributes_complete = 0
 " 开启保存 undo 历史功能
-" th
+" ifjth
 set undofile
+set cindent
 " undo 历史保存路径
 set undodir=~/tmp/.undo_history/
 
 "hi pmenu ctermbg=23
 "hi pmenusel ctermbg=232
+let g:EclimCompletionMethod = 'omnifunc' 
+autocmd FileType java se completeopt-=preview
+
+"se sessionop+=resize
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete

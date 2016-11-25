@@ -151,3 +151,5 @@ export PATH=/opt/Qt/5.7/gcc_64/bin:$PATH
 #export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
 #export PATH=${JAVA_HOME}/bin:$PATH  
 alias cl="cd .."
+#test adding
+#test adding

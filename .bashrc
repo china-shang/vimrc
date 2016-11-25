@@ -115,7 +115,8 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
   fi
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]:\[\033[00;00;1m\]\w \[\033[01;32;1m\]\$ \[\033[01;36;1m\]'
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]:\[\033[00;00;1m\]\w \[\033[01;32;1m\]\$ \[\033[01;36;1m\]\t'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\[\033[01;31;1m\]\t\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\n\[\033[00;00;1m\]\w \[\033[01;33;1m\]\$ ★★★★★★★★★★★★★★★►►►►►►►\[\033[01;36;1m\]'
 #POWERLINE_SCRIPT=/usr/share/powerline/bindings/bash/powerline.sh
 #if [ -f $POWERLINE_SCRIPT ]; then
 #  source $POWERLINE_SCRIPT
@@ -126,13 +127,27 @@ alias apd='sudo apt-get update'
 alias apg='sudo apt-get upgrade'
 alias apc='sudo apt-cache search'
 alias py='python'
+alias py3='python3'
 alias c='cd'
 alias ex='exit'
 alias v='vim'
+alias vi='vim -c :let\ qt=1'
 alias df='df -h'
 alias fr='free -h'
-alias vpn='sudo Download/XX-Net-3.1.19/code/3.2.6/xx_net.sh start'
-alias unvpn='sudo Download/XX-Net-3.1.19/code/3.2.6/xx_net.sh stop'
+alias vpn='sudo ~/Public/XX-Net-master/code/3.2.7/xx_net.sh start'
+alias unvpn='sudo  ~/Public/XX-Net-master/code/3.2.7/xx_net.sh stop'
 alias reboot='systemctl reboot -i'
-alias sshroot='ssh ubuntu@123.207.83.123'
+#alias sshroot='ssh ubuntu@123.207.83.123'
 alias free="free -h"
+alias emacs="emacs -nw"
+alias gits="git status"
+alias gita="git add"
+alias gitc="git commit -m"
+alias gitb="git branch"
+export PATH=/opt/Qt/5.7/gcc_64/bin:$PATH
+#set oracle jdk environment
+#export JAVA_HOME=/opt/java  ## 这里要注意目录要换成自己解压的jdk 目录
+#export JRE_HOME=${JAVA_HOME}/jre  
+#export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
+#export PATH=${JAVA_HOME}/bin:$PATH  
+alias cl="cd .."

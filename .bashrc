@@ -16,9 +16,11 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+#HISTSIZE=1000
+#HISTFILESIZE=2000
 
+HISTSIZE=2000
+HISTFILESIZE=4000
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -116,11 +118,18 @@ if ! shopt -oq posix; then
   fi
   fi
 #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]:\[\033[00;00;1m\]\w \[\033[01;32;1m\]\$ \[\033[01;36;1m\]\t'
-PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\[\033[01;31;1m\]\t\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\n\[\033[00;00;1m\]\w \[\033[01;33;1m\]\$ ★★★★★★★★★★★★★★★►►►►►►►\[\033[01;36;1m\]'
+#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\[\033[01;31;1m\]\t\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\n\[\033[00;00;1m\]\w \[\033[01;33;1m\]\$ ★★★★★★★★★★★★★★★►►►►►►►\[\033[01;36;1m\]'
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33;1m\]\u\[\033[00;00;1m\]@\[\033[01;33;1m\]\h\[\033[00;31;1m\]\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\[\033[01;31;1m\]\t\[\033[01;32;1m\]╠═╬═╬═╬═╬═╬═╬═╬═╬═╬═╣\n\[\033[00;00;1m\]\w \[\033[01;33;1m\]\$ ♣♣♣♣♣♣♣♣♣♣♣♣♣►►►►►►►►►►►\[\033[01;36;1m\]'
+powerline-daemon -q
+POWERLINE_BASH_CONTINUATION=1
+POWERLINE_BASH_SELECT=1
 #POWERLINE_SCRIPT=/usr/share/powerline/bindings/bash/powerline.sh
 #if [ -f $POWERLINE_SCRIPT ]; then
-#  source $POWERLINE_SCRIPT
+  #source $POWERLINE_SCRIPT
 #fi
+if [ -f .powerline ];then
+    source .powerline
+fi
 #alias 
 alias api='sudo apt-get install'
 alias apd='sudo apt-get update'
@@ -134,11 +143,10 @@ alias v='vim'
 alias vi='vim -c :let\ qt=1'
 alias df='df -h'
 alias fr='free -h'
-alias vpn='sudo ~/Public/XX-Net-master/code/3.2.7/xx_net.sh start'
-alias unvpn='sudo  ~/Public/XX-Net-master/code/3.2.7/xx_net.sh stop'
+alias vpn='sudo ~/Public/XX-Net-master/code/3.2.9/xx_net.sh start'
+alias unvpn='sudo  ~/Public/XX-Net-master/code/3.2.9/xx_net.sh stop'
 alias reboot='systemctl reboot -i'
 #alias sshroot='ssh ubuntu@123.207.83.123'
-alias free="free -h"
 alias emacs="emacs -nw"
 alias gits="git status"
 alias gita="git add"
@@ -151,3 +159,9 @@ export PATH=/opt/Qt/5.7/gcc_64/bin:$PATH
 #export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
 #export PATH=${JAVA_HOME}/bin:$PATH  
 alias cl="cd .."
+export PATH=/opt/mxe/usr/bin:$PATH
+alias wqmake="/opt/mxe/usr/i686-w64-mingw32.static/qt5/bin/qmake "
+export PKG_CONFIG_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/"
+export PKG_CONFIG_PATH_i686_w64_mingw32_static="/opt/mxe/usr/i686-w64-mingw32.static"
+alias hn="hexo n "
+alias he="hexo g && hexo d"

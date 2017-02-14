@@ -1,4 +1,13 @@
 nmap gc :close<CR>
+nmap co tl:copen<CR>tl
+nnoremap ,,c :.cc<cr>
+nnoremap gb :Buffers<cr>
+nnoremap ,tn :tabn<cr>
+nnoremap ,tp :tabp<cr>
+nnoremap ,gc :tabc<cr>
+
+"nnoremap en :let exename=
+nnoremap gM :split Makefile<cr>
 nmap cx xi
 nnoremap <c-w> <c-w><c-w>
 nnoremap <c-j> <c-w><c-j>
@@ -6,8 +15,8 @@ nnoremap <c-k> <c-w><c-k>
 nnoremap <c-h> <c-w><c-h>
 nnoremap <c-l> <c-w><c-l>
 
-inoremap <C-D> <ESC>$a
-inoremap <C-F> <ESC>$a;<ESC>
+inoremap <C-D> <ESC>A
+inoremap <C-F> <ESC>A<ESC>
 :silent !echo -ne "\e]12;IndianRed2\007"
 "let &t_SI = "\e]12;RoyalBlue1\007"
 let &t_SI = "\e]12;green\007"
@@ -63,12 +72,12 @@ map <F6> :call FormartSrc()<CR>
 inoremap } <C-R>=ClosePair('}')<CR>
 "nmap tl :Tlist<CR>
 nmap q! :q!<CR>
-nmap <F7> :split<CR>
-nmap <S-F7> :vsplit<CR>
-nmap <space> [i
+nmap <F7> :split
+nmap <S-F7> :vsplit
+"nmap <space> [i
 "nmap 9 $
-nmap // ^i//<ESC>j
-nmap <enter> i<enter><ESC>
+nmap // o//
+nmap <enter> A<enter><ESC>j
 nmap <F5> :call RUNexe()<CR>
 nmap <S-f5> :call RUNexe()<CR>
 "nmap <tab> i<tab><ESC>
@@ -98,8 +107,12 @@ au FileType html setlocal dict+=~/.vim/dict/css.dict
 "
 "syntastic相关
 execute pathogen#infect()
+"let g:syntastic_python_checkers=['flake8']
 let g:syntastic_python_checkers=['pylint']
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+
+let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
+"let g:syntastic_python_flake8_args='--select=E123'
 "golang
 "Processing... % (ctrl+c to stop)
 let g:fencview_autodetect=0
@@ -122,6 +135,7 @@ set guifont=Courier_New:h10:cANSI   " 设置字体
 let g:qt=0
 autocmd InsertLeave * se cul  " 用浅色高亮当前行  
 autocmd InsertEnter * se nocul    " 用浅色高亮当前行  
+autocmd InsertLeave *.py w
 set ruler           " 显示标尺  
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
     
@@ -174,6 +188,7 @@ set iskeyword+=_,$,@,%,#,-
 "markdown配置
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
+au BufRead,BufNewFile *.{lua}   set filetype=lua
 au BufRead,BufNewFile *.{js}   set filetype=javascript
 "rkdown to HTML  
 "nmap Fi :!firefox &   <CR><CR>
@@ -189,15 +204,22 @@ au BufRead,BufNewFile *.{js}   set filetype=javascript
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufReadPost *.pro exec ":call Setqt()"
+autocmd BufReadPost *.pro exec ":call Setqtpro()"
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
-func Setqt()
+func Setqtpro()
     let str = getline("$")
     if str != "QT += widgets"
         call append(line("$"),"QT += widgets")
     endif
 endfunc
 ""定义函数SetTitle，自动插入文件头 
+func SetMap()
+    if &filetype == 'python'
+        exec 'inoremap <c-f> <esc>A:<esc>o'
+        exec 'inoremap <c-d> <esc>A:<esc>'
+    endif
+endfunc
+
 func SetTitle() 
     "如果文件类型为.sh文件 
     if &filetype == 'sh' 
@@ -224,15 +246,15 @@ func SetTitle()
         call append(line(".")+2, " ************************************************************************/") 
     endif
     if g:qt == 1
-        exec ""
+        exec "normal G"
     elseif expand("%:e") == 'cpp'
-        call append(line(".")+3, "#include <iostream>")
-        call append(line(".")+4, "using namespace std;")
-        call append(line(".")+5, "")
+        "call append(line(".")+3, "#include <iostream>")
+        "call append(line(".")+4, "using namespace std;")
+        "call append(line(".")+5, "")
     endif
     if &filetype == 'c'
-        call append(line(".")+3, "#include <stdio.h>")
-        call append(line(".")+4, "")
+        "call append(line(".")+3, "#include <stdio.h>")
+        "call append(line(".")+4, "")
     endif
     if expand("%:e") == 'h'
         call append(line(".")+3, "#ifndef _".toupper(expand("%:r"))."_H")
@@ -264,7 +286,8 @@ let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
 "列出当前目录文件  
 "打开树状文件目录  
-:autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
+autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
+autocmd BufRead,BufNewFile *.c,*.cpp,*.h inoremap <C-F> <esc>A;<esc>
 "IDE部分
 func Clean()
     %s/\([^ ]\)\([!%\^&*-+\/=><]=\)\([^ ]\)/\1 \2 \3/ge
@@ -281,24 +304,28 @@ let makeprg="clang\ %\ -o\ %< -Wextra\ -g\ -Wall"
 let exename = 1
 func! CompileRunclang()
     exec "w"
-    exec '!date +\%T'
+    "exec 'AsyncRun date +\%T'
     if g:qt == 1 
-        exec "!make "
+        exec "AsyncRun qmake&&make "
     elseif &filetype == 'c'
-        if g:exename == 1
-            exec "!clang % -o %< -Wextra -g -Wall" g:Lib
+        if getfsize("Makefile") != -1
+            exec "AsyncRun make"
+        elseif g:exename == 1
+            exec "AsyncRun clang % -o %< -Wextra -g -Wall" g:Lib
         else 
-            exec "!clang *.o  -o " g:exename
+            exec "AsyncRun clang *.o  -o " g:exename
         endif
     elseif &filetype == 'cpp'
-        if g:exename == 1
-            exec "!clang++ % -o %< -Wextra -g -Wall " g:Lib
+        if getfsize("Makefile") != -1
+            exec "AsyncRun make"
+        elseif g:exename == 1
+            exec "AsyncRun clang++ % -o %< -Wextra -g -Wall " g:Lib
         else 
-            exec "!clang++ *.o  -o " g:exename
+            exec "AsyncRun clang++ *.o  -o " g:exename
         endif
     elseif &filetype == 'java' 
         exec "!javac %" 
-        "        exec "!time java %<"
+        "        exec "AsyncRun time java %<"
     elseif &filetype == 'sh'
         :!time bash %
     elseif &filetype == 'python'
@@ -317,10 +344,10 @@ func OnlyComp()
     exec"w"
     exec '!date +\%T'
     if &filetype == 'c'
-        exec "!clang % -c -Wall -Wextra -g " g:Lib 
+        exec "AsyncRun clang % -c -Wall -Wextra -g " g:Lib 
     endif
     if &filetype == 'cpp'
-        exec "!clang++ % -c -Wall -Wextra -g" g:Lib
+        exec "AsyncRun clang++ % -c -Wall -Wextra -g" g:Lib
     endif
 endfunc
 func Valgrind()
@@ -339,7 +366,7 @@ endfunc
 func RUNexe()
     "exec '!date +\%T'
     if g:qt == 1 
-        exec "!./qt "
+        exec '! now=$(pwd)&&./${now\#\#*/} '
     elseif &filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c'
         if g:exename == 1
             exec '!date +\%T&&printf "\n\n"&&time ' "./%<" 
@@ -354,6 +381,8 @@ func RUNexe()
         exec '!date +\%T&&printf "\n\n"&&node '"%"
     elseif &filetype == 'html'
         exec "!firefox % &"
+    elseif &filetype == 'lua'
+        exec "!lua5.3 %"
     endif
 endfunc
 "C,C++的调试
@@ -418,6 +447,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 set autoread
 " quickfix模式
 autocmd FileType c,cpp map <buffer> <leader><space> :w<CR>:make<cr>
+autocmd FileType python exec' call SetMap()'
 "代码补全 preview
 "set 
 "completeopt=menu 
@@ -553,7 +583,7 @@ call vundle#rc()
 "Bundle 'Python-mode-klen'
 "Bundle 'JavaScript-Indent'
 Bundle 'Better-Javascript-Indentation'
-Bundle 'kywind3000/asyncrun.vim' 
+Plugin 'skywind3000/asyncrun.vim'
 
 "django
 
@@ -568,7 +598,7 @@ filetype plugin indent on     " required!
 nmap <silent>tl :silent TagbarToggle<CR>
 
 " 启动时自动focus
-let g:tagbar_autofocus = 1
+"let g:tagbar_autofocus = 1
 
 " for ruby, delete if you do not need
 "let g:tagbar_type_ruby = {
@@ -602,24 +632,26 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Li
 "let g:ctrlp_extensions = ['funky']
 "let NERDTreeIgnore=['\.pyc']
 "DIY/mZ"nmap
-" configure syntastic syntax checking to check on open as well as save
+"" configure syntastic syntax checking to check on open as well as save
 set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-"let g:syntastic_always_populate_loc_list = 0
+"let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 0
 "let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+"let g:syntastic_check_on_wq = 1
 let g:ycm_semantic_triggers = {}
 " 引入 C++ 标准库tags
 set tags+=/data/misc/software/misc./vim/stdcpp.tags
 let g:ycm_semantic_triggers.c = ['->', '.']
+let g:ycm_semantic_triggers.lua=[':', '.']
+let g:ycm_semantic_triggers.python=['->']
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '<<'
 let g:ycm_error_symbol = '>>'
-let g:ycm_add_preview_to_completeopt = 0
-"let g:ycm_autoclose_preview_window_after_insertion = 1
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_max_diagnostics_to_display = 60
 "let g:ycm_min_num_of_chars_for_completion=0
 " 禁止缓存匹配项,每次都重新生成匹配项
@@ -634,52 +666,52 @@ inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
 inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
 inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
- 
-Bundle 'jsbeautify'
-Bundle 'The-NERD-Commenter'
+Plugin 'suan/vim-instant-markdown'
+Plugin 'jsbeautify'
+Plugin 'The-NERD-Commenter'
 Plugin 'octol/vim-cpp-enhanced-highlight'
 "Plugin 'artur-shaik/vim-javacomplete2'
-Bundle 'django_templates.vim'
+Plugin 'django_templates.vim'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'othree/html5.vim'
-Bundle 'Django-Projects'
-Plugin 'Chiel92/vim-autoformat'
-Bundle 'gmarik/vundle'
-Bundle 'tpope/vim-fugitive'
-Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
-Bundle 'Yggdroot/indentLine'
-Bundle 'L9'
-Bundle 'majutsushi/tagbar'
-Bundle 'FuzzyFinder'
-Bundle 'https://github.com/wincent/command-t.git'
-Bundle 'https://github.com/davidhalter/jedi-vim.git'
-Bundle 'Auto-Pairs'
-"Bundle 'python-imports.vim'
-Bundle 'CaptureClipboard'
+Plugin 'Django-Projects'
+Plugin 'chiel92/vim-autoformat'
+Plugin 'VundleVim/Vundle.Vim'
+Plugin 'tpope/vim-fugitive'"remove github used
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}"//html <p></p>
+Plugin 'yggdroot/indentline'
+Plugin 'L9'
+Plugin 'majutsushi/tagbar'
+Plugin 'FuzzyFinder'
+Plugin 'wincent/command-t'
+Plugin 'https://github.com/davidhalter/jedi-vim.git'
+Plugin 'Auto-Pairs'
+"Plugin 'python-imports.vim'
+Plugin 'CaptureClipboard'
 Plugin 'thinca/vim-quickrun'
-Bundle 'ctrlp-modified.vim'
-Bundle 'last_edit_marker.vim'
-Bundle 'synmark.vim'
-Bundle 'SQLComplete.vim'
-Bundle 'Javascript-OmniCompletion-with-YUI-and-j'
-"Bundle 'jslint.vim'
-Bundle "pangloss/vim-javascript"
-Bundle 'Vim-Script-Updater'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'ctrlp.vim'
-Bundle 'tacahiroy/ctrlp-funky'
+Plugin 'ctrlp-modified.vim'
+Plugin 'last_edit_marker.vim'
+Plugin 'synmark.vim'
+Plugin 'SQLComplete.vim'
+Plugin 'Javascript-OmniCompletion-with-YUI-and-j'
+"Plugin 'jslint.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'Vim-Script-Updater'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
 "自定义安装
 Plugin 'YouCompleteMe'
 Plugin 'c.vim'
 Plugin 'cpp.vim'
 Plugin 'fcitx.vim'
 Plugin 'grep.vim'
+Plugin 'easymotion/vim-easymotion'
 Plugin 'surround.vim'
-Plugin 'vim-colors-solarized'
-Plugin 'vim-easymotion'
-Plugin 'vim-indent-guides'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-signature'
-Bundle 'sjl/gundo.vim'
+Plugin 'sjl/gundo.vim'
 nnoremap <leader>h :GundoToggle<CR>
 "easymotion 配置
 let g:EasyMotion_smartcase = 1
@@ -816,7 +848,7 @@ let g:quickrun_no_default_key_mappings = 1
 nmap <Leader>r <Plug>(quickrun)
 map <F9> :QuickRun<CR>
 set relativenumber
-let NERDTreeWinSize=29
+let NERDTreeWinSize=26
     
 let g:tagbar_bin='ctags'
 hi CursorLine ctermbg=238
@@ -847,11 +879,14 @@ let g:html5_microdata_attributes_complete = 0
 
 let g:html5_aria_attributes_complete = 0
 " 开启保存 undo 历史功能
-" ifjth
 set undofile
 set cindent
 " undo 历史保存路径
 set undodir=~/tmp/.undo_history/
+
+"noew aa
+"
+"
 
 "hi pmenu ctermbg=23
 "hi pmenusel ctermbg=232
@@ -860,3 +895,26 @@ autocmd FileType java se completeopt-=preview
 
 "se sessionop+=resize
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
+"
+se completeopt=longest,menu
+se modifiable
+let g:instant_markdown_allow_unsafe_content = 1
+"let g:jedi#force_py_version = 3
+let g:jedi#squelch_py_warning= 0 
+
+let g:ycm_enable_diagnostic_highlighting = 0
+"let g:ycm_enable_diagnostic_signs = 0
+"let g:ycm_max_diagnostics_to_display = 0
+let g:ycm_filetype_blacklist = {
+      \ 'tagbar' : 1,
+      \ 'nerdtree' : 1,
+      \}
+"let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_collect_identifiers_from_tags_files = 1
+inoremap <c-j> <c-x><c-p>
+"let g:syntastic_always_populate_loc_list = 1
+let g:asyncrun_bell=1
+nnoremap ,yd i<space><esc>l:call YoudaoCursorTranslate()<cr>
+func! Timerf(timer)
+    echo "hello"
+endfunction

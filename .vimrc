@@ -366,7 +366,11 @@ endfunc
 func RUNexe()
     "exec '!date +\%T'
     if g:qt == 1 
-        exec '! now=$(pwd)&&./${now\#\#*/} '
+        if g:asyn == 1
+            exec 'AsyncRun now=$(pwd)&&./${now\#\#*/}'
+        else
+            exec '! now=$(pwd)&&./${now\#\#*/} '
+        endif
     elseif &filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c'
         if g:exename == 1
             exec '!date +\%T&&printf "\n\n"&&time ' "./%<" 
@@ -383,6 +387,11 @@ func RUNexe()
         exec "!firefox % &"
     elseif &filetype == 'lua'
         exec "!lua5.3 %"
+    endif
+endfunc
+func Complily()
+    if g:qt == 1
+        exec 'AsyncRun now=$(pwd)&&./${now\#\#*/}'
     endif
 endfunc
 "C,C++的调试

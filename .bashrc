@@ -127,8 +127,8 @@ POWERLINE_BASH_SELECT=1
 #if [ -f $POWERLINE_SCRIPT ]; then
   #source $POWERLINE_SCRIPT
 #fi
-if [ -f .powerline ];then
-    source .powerline
+if [ -f ~/.powerline ];then
+    source ~/.powerline
 fi
 #alias 
 alias api='sudo apt-get install'

@@ -43,7 +43,7 @@ __powerline() {
     readonly SYSTEM_PROMPT_SYMBOL_USER='➜'
 
     __git_info() { 
-        [ -x "$(which git)" ] || return    # git not found
+        #[ -x "$(which git)" ] || return    # git not found
 
         # get current branch name or short SHA1 hash for detached head
         local BRANCH="$(git symbolic-ref --short HEAD 2> /dev/null || git describe --tags --always 2>/dev/null)"
@@ -112,7 +112,8 @@ __powerline() {
         [[ $(jobs -l | wc -l) -gt 0 ]] && PROMPT_SYMBOL+="${PROMPT_USER_HOST_COLOR}${SYSTEM_PROMPT_SYMBOL_JOBS}─${RESET}"
         [[ $RETVAL -ne 0 ]] && PROMPT_SYMBOL+="${FG_RED}${SYSTEM_PROMPT_SYMBOL_FALSE}${RESET}${PROMPT_USER_HOST_COLOR}─${RESET}"
 
-        PS1_U="${PROMPT_USER_HOST_COLOR}╭─${PROMPT_USER_HOST_H}${PROMPT_USER_HOST} ${PROMPT_SYMBOL_DIR} $(__git_info)${PROMPT_SYMBOL_DATE}"
+        #PS1_U="${PROMPT_USER_HOST_COLOR}╭─${PROMPT_USER_HOST_H}${PROMPT_USER_HOST} ${PROMPT_SYMBOL_DIR} $(__git_info)${PROMPT_SYMBOL_DATE}"
+        PS1_U="${PROMPT_USER_HOST_COLOR}╭─${PROMPT_USER_HOST_H}${PROMPT_USER_HOST} ${PROMPT_SYMBOL_DIR} ${PROMPT_SYMBOL_DATE}"
         PS1_D="${PROMPT_USER_HOST_COLOR}╰─${PROMPT_SYMBOL}${PROMPT_USER_HOST_COLOR}\$ ${RESET}"
         PS1="${PS1_U}\n${PS1_D}"
     }

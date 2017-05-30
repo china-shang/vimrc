@@ -152,7 +152,8 @@ alias gits="git status"
 alias gita="git add"
 alias gitc="git commit -m"
 alias gitb="git branch"
-export PATH=/opt/Qt/5.7/gcc_64/bin:$PATH
+#export PATH=/opt/Qt/5.7/gcc_64/bin:$PATH
+export PATH=/opt/Qt5.8.0/5.8/gcc_64/bin:$PATH
 #set oracle jdk environment
 #export JAVA_HOME=/opt/java  ## 这里要注意目录要换成自己解压的jdk 目录
 #export JRE_HOME=${JAVA_HOME}/jre  
@@ -165,3 +166,5 @@ export PKG_CONFIG_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/"
 export PKG_CONFIG_PATH_i686_w64_mingw32_static="/opt/mxe/usr/i686-w64-mingw32.static"
 alias hn="hexo n "
 alias he="hexo g && hexo d"
+alias m="make"
+alias qm="qmake "

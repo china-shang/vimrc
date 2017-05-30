@@ -2,8 +2,8 @@ nmap gc :close<CR>
 nmap co tl:copen<CR>tl
 nnoremap ,,c :.cc<cr>
 nnoremap gb :Buffers<cr>
-nnoremap ,tn :tabn<cr>
-nnoremap ,tp :tabp<cr>
+nnoremap tn :tabn<cr>
+nnoremap tp :tabp<cr>
 nnoremap ,gc :tabc<cr>
 
 "nnoremap en :let exename=
@@ -50,10 +50,10 @@ nmap <C-E> $
 "nmap <C-A> ^
 nnoremap <F12>  :call Clean()<CR><cr><f6><cr><cr>
 "map <C-W> <C-W>
-imap <C-K> <C-Y>,
+"imap <C-K> <C-Y>,
 "imap <C-T> <C-Q><TAB>
-imap <C-T> <TAB>
-imap <C-J> <ESC>
+"imap <C-T> <TAB>
+"imap <C-J> <ESC>
 imap <C-V> <ESC><ESC>"*pa
 "map <C-V> <ESC>"*pa
 "imap <C-A> <ESC>^
@@ -84,8 +84,8 @@ nmap <S-f5> :call RUNexe()<CR>
 nmap \\ $a//
 set sw=4
 set ts=4
-nnoremap tp :bp <CR> 
-nnoremap tn :bn <CR> 
+nnoremap ,tp :bp <CR> 
+nnoremap ,tn :bn <CR> 
 nnoremap td :bd
 set et
 set smarttab
@@ -135,7 +135,7 @@ set guifont=Courier_New:h10:cANSI   " 设置字体
 let g:qt=0
 autocmd InsertLeave * se cul  " 用浅色高亮当前行  
 autocmd InsertEnter * se nocul    " 用浅色高亮当前行  
-autocmd InsertLeave *.py w
+"autocmd InsertLeave *.py w
 set ruler           " 显示标尺  
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
     
@@ -324,7 +324,7 @@ func! CompileRunclang()
             exec "AsyncRun clang++ *.o  -o " g:exename
         endif
     elseif &filetype == 'java' 
-        exec "!javac %" 
+        "exec "!javac %" 
         "        exec "AsyncRun time java %<"
     elseif &filetype == 'sh'
         :!time bash %
@@ -363,9 +363,10 @@ func RUN()
         exec"call RUNexe()<CR><cr>"
     endif
 endfunc
+let g:asyn=0
 func RUNexe()
     "exec '!date +\%T'
-    if g:qt == 1 
+    if g:qt == 1 && (&filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c')
         if g:asyn == 1
             exec 'AsyncRun now=$(pwd)&&./${now\#\#*/}'
         else
@@ -662,20 +663,22 @@ let g:ycm_error_symbol = '>>'
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_max_diagnostics_to_display = 60
-"let g:ycm_min_num_of_chars_for_completion=0
+let g:ycm_min_num_of_chars_for_completion=2
 " 禁止缓存匹配项,每次都重新生成匹配项
-let g:ycm_cache_omnifunc=0
+"let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
+let g:ycm_confirm_extra_conf=0
 let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
-inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
+"inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
 "上下左右键的行为 会显示其他信息
-inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
-inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
+"inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
+"inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
+"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
+"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
 Plugin 'suan/vim-instant-markdown'
+Plugin 'rdnetto/YCM-Generator' 
 Plugin 'jsbeautify'
 Plugin 'The-NERD-Commenter'
 Plugin 'octol/vim-cpp-enhanced-highlight'
@@ -721,6 +724,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-signature'
 Plugin 'sjl/gundo.vim'
+
 nnoremap <leader>h :GundoToggle<CR>
 "easymotion 配置
 let g:EasyMotion_smartcase = 1
@@ -905,7 +909,7 @@ autocmd FileType java se completeopt-=preview
 "se sessionop+=resize
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 "
-se completeopt=longest,menu
+"se completeopt=longest,menu
 se modifiable
 let g:instant_markdown_allow_unsafe_content = 1
 "let g:jedi#force_py_version = 3

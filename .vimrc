@@ -207,9 +207,11 @@ au BufRead,BufNewFile *.{js}   set filetype=javascript
 autocmd BufReadPost *.pro exec ":call Setqtpro()"
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
 func Setqtpro()
-    let str = getline("$")
+    let str = getline("$") && g:qt == 1
     if str != "QT += widgets"
+        call append(line("$"),"CONFIG+=debug")
         call append(line("$"),"QT += widgets")
+        exec 'wq'
     endif
 endfunc
 ""定义函数SetTitle，自动插入文件头 

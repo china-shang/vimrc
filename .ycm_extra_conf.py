@@ -61,6 +61,7 @@ import os
 
 import ycm_core
 
+qt_file = "~/.Qt5.9/5.9/"
 # These are the compilation flags that will be used in case there's no
 
 # compilation database set (by default, one is not set).
@@ -69,121 +70,121 @@ import ycm_core
 
 flags = [
 
-'-x', 'c++',
+    '-x', 'c++',
 
-'-Wall',
+    '-Wall',
 
-'-Wextra',
+    '-Wextra',
 
-#'-fPIE',
+    #'-fPIE',
 
-#'-D_REENTRANT',
+    #'-D_REENTRANT',
 
-'-std=c++11',
+    '-std=c++11',
 
-#'-stdlib=libc++',
+    #'-stdlib=libc++',
 
-#'-ftemplate-depth=8192',
+    #'-ftemplate-depth=8192',
 
-#'-fconstexpr-depth=8192',
+    #'-fconstexpr-depth=8192',
 
-#'-lc++abi',
+    #'-lc++abi',
 
-'-isystem', '/usr/include/c++/v1',
+    '-isystem', '/usr/include/c++/v1',
 
-'-isystem', '/usr/local/include',
+    '-isystem', '/usr/local/include',
 
-'-isystem', '/usr/include/x86_64-linux-gnu',
+    '-isystem', '/usr/include/x86_64-linux-gnu',
 
-'-isystem', '/usr/include',
+    '-isystem', '/usr/include',
 
-'-I', '/usr/local/src/yeppp/1.0.0/library/headers',
+    '-I', '/usr/local/src/yeppp/1.0.0/library/headers',
 
-'-I', '/usr/local/src/string_view/include/experimental',
+    '-I', '/usr/local/src/string_view/include/experimental',
 
-'-I', '/usr/local/src/scoped_resource',
+    '-I', '/usr/local/src/scoped_resource',
 
-'-I', '/usr/local/include/hpx/external',
+    '-I', '/usr/local/include/hpx/external',
 
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/mkspecs/linux-clang-libc++',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtBluetooth',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtCLucene',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtConcurrent',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtCore',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtDBus',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtDeclarative',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtDesigner',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtDesignerComponents',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtGui',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtHelp',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtMultimedia',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtMultimediaQuick_p',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtMultimediaWidgets',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtNetwork',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtNfc',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtOpenGL',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtOpenGLExtensions',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtPlatformSupport',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtPositioning',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtPrintSupport',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtQml',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtQuick',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtQuickParticles',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtQuickTest',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtScript',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtScriptTools',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtSensors',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtSerialPort',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtSql',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtSvg',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtTest',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtUiTools',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtWebKit',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtWebKitWidgets',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtWidgets',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtX11Extras',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtXml',
-
-'-I', '/opt/Qt5.8.0/5.8/gcc_64/include/QtXmlPatterns',
+    '-I', qt_file + 'gcc_64/mkspecs/linux-clang-libc++',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtBluetooth',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtCLucene',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtConcurrent',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtCore',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtDBus',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtDeclarative',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtDesigner',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtDesignerComponents',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtGui',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtHelp',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtMultimedia',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtMultimediaQuick_p',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtMultimediaWidgets',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtNetwork',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtNfc',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtOpenGL',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtOpenGLExtensions',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtPlatformSupport',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtPositioning',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtPrintSupport',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtQml',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtQuick',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtQuickParticles',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtQuickTest',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtScript',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtScriptTools',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtSensors',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtSerialPort',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtSql',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtSvg',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtTest',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtUiTools',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtWebKit',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtWebKitWidgets',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtWidgets',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtX11Extras',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtXml',
+    qt_file +
+    '-I', qt_file + 'gcc_64/include/QtXmlPatterns',
 
 
 ]
@@ -202,134 +203,140 @@ flags = [
 
 compilation_database_folder = ''
 
-if os.path.exists( compilation_database_folder ):
+if os.path.exists(compilation_database_folder):
 
-  database = ycm_core.CompilationDatabase( compilation_database_folder )
+    database = ycm_core.CompilationDatabase(compilation_database_folder)
 
 else:
 
-  database = None
+    database = None
 
-SOURCE_EXTENSIONS = [ '.cpp', '.cxx', '.cc', '.c', '.m', '.mm' ]
+SOURCE_EXTENSIONS = ['.cpp', '.cxx', '.cc', '.c', '.m', '.mm']
+
 
 def DirectoryOfThisScript():
 
-  return os.path.dirname( os.path.abspath( __file__ ) )
+    return os.path.dirname(os.path.abspath(__file__))
 
-def MakeRelativePathsInFlagsAbsolute( flags, working_directory ):
 
-  if not working_directory:
+def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
 
-    return list( flags )
+    if not working_directory:
 
-  new_flags = []
+        return list(flags)
 
-  make_next_absolute = False
+    new_flags = []
 
-  path_flags = [ '-isystem', '-I', '-iquote', '--sysroot=' ]
+    make_next_absolute = False
 
-  for flag in flags:
+    path_flags = ['-isystem', '-I', '-iquote', '--sysroot=']
 
-    new_flag = flag
+    for flag in flags:
 
-    if make_next_absolute:
+        new_flag = flag
 
-      make_next_absolute = False
+        if make_next_absolute:
 
-      if not flag.startswith( '/' ):
+            make_next_absolute = False
 
-        new_flag = os.path.join( working_directory, flag )
+            if not flag.startswith('/'):
 
-    for path_flag in path_flags:
+                new_flag = os.path.join(working_directory, flag)
 
-      if flag == path_flag:
+        for path_flag in path_flags:
 
-        make_next_absolute = True
+            if flag == path_flag:
 
-        break
+                make_next_absolute = True
 
-      if flag.startswith( path_flag ):
+                break
 
-        path = flag[ len( path_flag ): ]
+            if flag.startswith(path_flag):
 
-        new_flag = path_flag + os.path.join( working_directory, path )
+                path = flag[len(path_flag):]
 
-        break
+                new_flag = path_flag + os.path.join(working_directory, path)
 
-    if new_flag:
+                break
 
-      new_flags.append( new_flag )
+        if new_flag:
 
-  return new_flags
+            new_flags.append(new_flag)
 
-def IsHeaderFile( filename ):
+    return new_flags
 
-  extension = os.path.splitext( filename )[ 1 ]
 
-  return extension in [ '.h', '.hxx', '.hpp', '.hh' ]
+def IsHeaderFile(filename):
 
-def GetCompilationInfoForFile( filename ):
+    extension = os.path.splitext(filename)[1]
 
-  # The compilation_commands.json file generated by CMake does not have entries
+    return extension in ['.h', '.hxx', '.hpp', '.hh']
 
-  # for header files. So we do our best by asking the db for flags for a
 
-  # corresponding source file, if any. If one exists, the flags for that file
+def GetCompilationInfoForFile(filename):
 
-  # should be good enough.
+    # The compilation_commands.json file generated by CMake does not have
+    # entries
 
-  if IsHeaderFile( filename ):
+    # for header files. So we do our best by asking the db for flags for a
 
-    basename = os.path.splitext( filename )[ 0 ]
+    # corresponding source file, if any. If one exists, the flags for that file
 
-    for extension in SOURCE_EXTENSIONS:
+    # should be good enough.
 
-      replacement_file = basename + extension
+    if IsHeaderFile(filename):
 
-      if os.path.exists( replacement_file ):
+        basename = os.path.splitext(filename)[0]
 
-        compilation_info = database.GetCompilationInfoForFile(
+        for extension in SOURCE_EXTENSIONS:
 
-          replacement_file )
+            replacement_file = basename + extension
 
-        if compilation_info.compiler_flags_:
+            if os.path.exists(replacement_file):
 
-          return compilation_info
+                compilation_info = database.GetCompilationInfoForFile(
 
-    return None
+                    replacement_file)
 
-  return database.GetCompilationInfoForFile( filename )
+                if compilation_info.compiler_flags_:
 
-def FlagsForFile( filename, **kwargs ):
+                    return compilation_info
 
-  if database:
+        return None
 
-    # Bear in mind that compilation_info.compiler_flags_ does NOT return a
+    return database.GetCompilationInfoForFile(filename)
 
-    # python list, but a "list-like" StringVec object
 
-    compilation_info = GetCompilationInfoForFile( filename )
+def FlagsForFile(filename, **kwargs):
 
-    if not compilation_info:
+    if database:
 
-      return None
+        # Bear in mind that compilation_info.compiler_flags_ does NOT return a
 
-    final_flags = MakeRelativePathsInFlagsAbsolute(
+        # python list, but a "list-like" StringVec object
 
-      compilation_info.compiler_flags_,
+        compilation_info = GetCompilationInfoForFile(filename)
 
-      compilation_info.compiler_working_dir_ )
+        if not compilation_info:
 
-  else:
+            return None
 
-    relative_to = DirectoryOfThisScript()
+        final_flags = MakeRelativePathsInFlagsAbsolute(
 
-    final_flags = MakeRelativePathsInFlagsAbsolute( flags, relative_to )
+            compilation_info.compiler_flags_,
 
-  return {
+            compilation_info.compiler_working_dir_)
 
-    'flags': final_flags,
+    else:
 
-    'do_cache': True
+        relative_to = DirectoryOfThisScript()
 
-  }
+        final_flags = MakeRelativePathsInFlagsAbsolute(flags, relative_to)
+
+    return {
+
+        'flags': final_flags,
+
+        'do_cache': True
+
+    }

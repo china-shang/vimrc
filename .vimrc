@@ -1,4 +1,173 @@
+set mouse=v
+set clipboard+=unnamed 
+set cursorline              " 突出显示当前行
+set guioptions-=m           " 隐藏菜单栏
+set noeb
+set nobackup
+set wildmenu
+set whichwrap+=<,>,h,l
+set smarttab
+set mousemodel=popup
+set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
+set shiftwidth=4
+set helplang=cn
+set ruler                   " 打开状态栏标尺
+set noswapfile
+set mouse=c
+set report=0
+set showmatch
+set iskeyword+=.
+set statusline+=%#warningmsg#
+set statusline=%F%m%r%h%w\ \ \ %Y\ \ \ %{Mode()}\ \ \ \ \ [%l\,%v]\ \ \ %p%%\ %{strftime(\"\ -\ %H:%M\")}   "状态行显示的内容  
+set guioptions-=m
+set termguicolors
+set undodir=~/tmp/.undo_history/
+set guioptions-=r
+set showcmd         " 输入的命令显示出来，看的清楚些  
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Linux
+set scrolloff=3
+set go=             " 不要图形按钮  
+set selection=exclusive
+set guioptions-=L
+set cindent
+set guioptions-=T
+set termencoding=utf-8
+set foldmethod=manual
+set selection=inclusive
+set encoding=utf8
+set statusline+=%*
+set gcr=a:block-blinkon0
+set relativenumber
+set noshowmode
+set undofile
+set guioptions-=l
+set tags+=/data/misc/software/misc./vim/stdcpp.tags
+set rtp+=~/.vim/bundle/vundle/
+set matchtime=2
+set fillchars=vert:\ ,stl:\ ,stlnc:\
+set selectmode=mouse,key
+set linespace=0
+set guioptions-=T           " 隐藏工具栏
+set clipboard=unnamed
+set incsearch
+set foldenable      " 允许折叠  
+set cul "高亮光标所在行
+set fo+=mB
+set ts=4
+set backspace=2
+set ignorecase
+set confirm
+set nocompatible
+set magic                   " 设置魔术
+set autowrite
+set autoread
+set iskeyword+=_,$,@,%,#,-
+set viminfo+=!
+set cmdheight=2
+set langmenu=zh_CN.UTF-8
+set hlsearch
+set history=300
+set number
+set smarttab
+set expandtab
+set softtabstop=4
+set tabstop=4
+set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  " 显示中文帮助
+set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
+set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
+set ruler           " 显示标尺  
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10   " 设置字体  
+set shortmess=atI   " 启动的r时候不显示那个援助乌干达儿童的提示  
+set cuc
+set nocompatible
+set rtp+=$GOROOT/misc/vim
+set wildmenu
+set sm
+set lbr
+set et
+set sw=4
+set t_Co=256
+filetype on
+" 载入文件类型插件
+filetype plugin on
+" 为特定文件类型载入相关缩进文件
+filetype indent on
+
+
+" autocmd
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
+au BufRead,BufNewFile *.{go}   set filetype=go
+au BufRead,BufNewFile *.{lua}   set filetype=lua
+au BufRead,BufNewFile *.{js}   set filetype=javascript
+au BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+au vimenter *.py,*.c,*.cpp,*.h,*.java,*.html,*.js,*.sh TagbarToggle 
+au VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+au FileType python exec' call SetMap()'
+au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
+au FileType css setlocal dict+=~/.vim/dict/css.dict
+au FileType c setlocal dict+=~/.vim/dict/c.dict
+au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
+au FileType scale setlocal dict+=~/.vim/dict/scale.dict
+au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
+au FileType html setlocal dict+=~/.vim/dict/javascript.dict
+au FileType html setlocal dict+=~/.vim/dict/css.dict
+au BufReadPost *.pro exec ":call Setqtpro()"
+au BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
+au vimenter * if !argc() | NERDTree | endif
+au FileType c,cpp map <buffer> <leader><space> :w<CR>:make<cr>
+"au GUIEnter * colorscheme solarized
+au FileType java se completeopt-=preview
+au BufNewFile * normal G
+au BufRead,BufNewFile *.c,*.cpp,*.h inoremap <C-F> <esc>A;<esc>
+au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+au VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+"au BufWritePost $MYVIMRC source $MYVIMRC
+au VimLeave * :!echo -ne "\e]12;grey\007"
+
+
+"colors Blue2
+hi YcmWarningSection  term=bold ctermfg=11 gui=bold guifg=Yellow
+hi Function  term=bold ctermfg=121 gui=bold guifg=SeaGreen
+"颜色
+hi Function ctermfg=178
+hi linenr ctermfg = 214
+hi statusline ctermbg=39 ctermfg=241
+hi IndentGuidesOdd guibg=red ctermbg=3
+hi IndentGuidesEven guibg=green ctermbg=4
+hi type ctermfg=167
+hi comment ctermfg=141
+hi Identi ctermfg=39
+hi string ctermfg=6
+hi Folded guibg=grey guifg=blue
+hi CursorLine ctermbg=238
+
+
+
+" map区
 nmap gc :close<CR>
+nnoremap ,yd i<space><esc>l:call YoudaoCursorTranslate()<cr>
+inoremap <c-j> <c-x><c-p>
+map <Leader><leader>h <Plug>(easymotion-linebackward)
+map <Leader><Leader>j <Plug>(easymotion-j)
+map <Leader><Leader>k <Plug>(easymotion-k)
+map <Leader><leader>l <Plug>(easymotion-lineforward)
+"unmap ,,s
+"map <leader>r <Plug>(easymotion-prefix)
+" 重复上一次操作, 类似repeat插件, 很强大
+map <Leader><leader>. <Plug>(easymotion-repeat)
+nnoremap <leader>h :GundoToggle<CR>
+"自动补全
+inoremap ( ()<ESC>i
+inoremap ) <C-R>=ClosePair(')')<CR>
+inoremap { {<CR>}<ESC>O
+inoremap [ []<ESC>i
+inoremap ] <C-R>=ClosePair(']')<CR>
+inoremap " ""<ESC>i
+inoremap ' ''<ESC>i
+nnoremap <C-N> :CtrlPFunky<CR>
+nnoremap <Leader>fu :execute 'CtrlPFunky ' . expand('<cword>')<CR>
+nnoremap ,tn :bn <CR> 
+nnoremap td :bd
 nmap co tl:copen<CR>tl
 nnoremap ,,c :.cc<cr>
 nnoremap gb :Buffers<cr>
@@ -14,11 +183,6 @@ nnoremap <c-h> <c-w><c-h>
 nnoremap <c-l> <c-w><c-l>
 inoremap <C-D> <ESC>A
 inoremap <C-F> <ESC>A<ESC>
-:silent !echo -ne "\e]12;IndianRed2\007"
-"let &t_SI = "\e]12;RoyalBlue1\007"
-let &t_SI = "\e]12;green\007"
-let &t_EI = "\e]12;IndianRed2\007"
-autocmd VimLeave * :!echo -ne "\e]12;grey\007"
 nnoremap <silent>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <silent>gh :YcmCompleter GoToInclude<CR>
 nmap <silent> <Leader>gh :FSHere<cr>
@@ -27,7 +191,6 @@ nnoremap <silent>gp :YcmCompleter GetParent<CR>
 nnoremap <silent>gt :YcmCompleter GetType<CR>
 nnoremap <silent>gw :YcmDiags<CR>
 let mapleader = ","
-set t_Co=256
 nmap gm :call Valgrind()<CR>
 nnoremap /N  :nohlsearch<CR>
 nmap uc :exec"!cp ~/.ycm_extra_conf_c.py ~/.ycm_extra_conf.py"<CR>
@@ -66,28 +229,12 @@ nmap <F5> :call RUNexe()<CR>
 nmap <S-f5> :call RUNexe()<CR>
 "nmap <tab> i<tab><ESC>
 nmap \\ $a//
-set sw=4
-set ts=4
 nnoremap ,tp :bp <CR> 
-nnoremap ,tn :bn <CR> 
-nnoremap td :bd
-set et
-set smarttab
+:silent !echo -ne "\e]12;IndianRed2\007"
+"let &t_SI = "\e]12;RoyalBlue1\007"
+let &t_SI = "\e]12;green\007"
+let &t_EI = "\e]12;IndianRed2\007"
 "set smartindent
-set lbr
-set fo+=mB
-set sm
-set selection=inclusive
-set wildmenu
-set mousemodel=popup
-au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
-au FileType css setlocal dict+=~/.vim/dict/css.dict
-au FileType c setlocal dict+=~/.vim/dict/c.dict
-au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
-au FileType scale setlocal dict+=~/.vim/dict/scale.dict
-au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
-au FileType html setlocal dict+=~/.vim/dict/javascript.dict
-au FileType html setlocal dict+=~/.vim/dict/css.dict
 "
 "syntastic相关
 execute pathogen#infect()
@@ -99,84 +246,32 @@ let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
 "golang
 "Processing... % (ctrl+c to stop)
 let g:fencview_autodetect=0
-set rtp+=$GOROOT/misc/vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible
 syntax enable
 syntax on 
-set cuc
-set cul "高亮光标所在行
-set shortmess=atI   " 启动的r时候不显示那个援助乌干达儿童的提示  
-set go=             " 不要图形按钮  
 "color desert     " 设置背景主题  
 "color ron     " 设置背景主题  
 "color torte    " 设置背景主题  
-set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10   " 设置字体  
 
 let g:qt=0
-set ruler           " 显示标尺  
-set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
-set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
 "set statusline=%F%m%r%h%w\ \ \ \ \ \ [POS=%l,%v]\ [%p%%]\ %{strftime(\"\ -\ %H:%M:%S\")}   "状态行显示的内容  
-set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
-set foldenable      " 允许折叠  
 "set foldmethod=   " 折叠  
 "set foldmarker=//{,//}
-set nocompatible  "去掉讨厌的有关vi一致性模式，避免以前版本的一些bug和局限  " 显示中文帮助
 if version >= 60
     set helplang=cn
     set encoding=utf-8
 endif
 " 自动缩进
-"set autoindent
-" Tab键的宽度
-set tabstop=4
-" 统一缩进为4
-set softtabstop=4
-set shiftwidth=4
-" 使用空格代替制表符
-set expandtab
-" 在行和段开始处使用制表符
-set smarttab
-" 显示行号
-set number
-" 历史记录数
-set history=300
-"搜索逐字符高亮
-set hlsearch
-set incsearch
-"语言设置
-set langmenu=zh_CN.UTF-8
-set helplang=cn
-" 总是显示状态行
-set cmdheight=2
-" 侦测文件类型
-filetype on
-" 载入文件类型插件
-filetype plugin on
-" 为特定文件类型载入相关缩进文件
-filetype indent on
-" 保存全局变量
-set viminfo+=!
-" 带有如下符号的单词不要被换行分割
-set iskeyword+=_,$,@,%,#,-
-" 字符间插入的像素行数目
 "markdown配置
-au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
-au BufRead,BufNewFile *.{go}   set filetype=go
-au BufRead,BufNewFile *.{lua}   set filetype=lua
-au BufRead,BufNewFile *.{js}   set filetype=javascript
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-autocmd BufReadPost *.pro exec ":call Setqtpro()"
-autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
 
 
-func Setqtpro()
+func! Setqtpro()
     let str = getline("$") && g:qt == 1
     if str != "QT += widgets"
         call append(line("$"),"CONFIG+=debug")
@@ -187,7 +282,7 @@ endfunc
 ""定义函数SetTitle，自动插入文件头 
 
 
-func SetMap()
+func! SetMap()
     if &filetype == 'python'
         exec 'inoremap <c-f> <esc>A:<esc>o'
         exec 'inoremap <c-d> <esc>A:<esc>'
@@ -195,7 +290,7 @@ func SetMap()
 endfunc
 
 
-func SetTitle() 
+func! SetTitle() 
     "如果文件类型为.sh文件 
     if &filetype == 'sh' 
         call setline(1,"\#!/bin/bash") 
@@ -240,22 +335,15 @@ func SetTitle()
     endif
     "新建文件后，自动定位到文件末尾
 endfunc 
-autocmd BufNewFile * normal G
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "键盘命令
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " shift tab pages
 " 选中状态下 Ctrl+c 复制
-set mouse=v
-set clipboard=unnamed
-nnoremap <C-N> :CtrlPFunky<CR>
-nnoremap <Leader>fu :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_syntax_highlight = 1
 let g:ctrlp_extensions = ['funky']
 "列出当前目录文件  
 "打开树状文件目录  
-autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
-autocmd BufRead,BufNewFile *.c,*.cpp,*.h inoremap <C-F> <esc>A;<esc>
 "IDE部分
 "C，C++ 按F5编译运行
 let Lib = " "
@@ -263,7 +351,12 @@ let makeprg="clang\ %\ -o\ %< -Wextra\ -g\ -Wall"
 let exename = 1
 
 
-func Clean()
+func! Timerf(timer)
+    echo "hello"
+endfunction
+
+
+func! Clean()
     %s/\([^ ]\)\([!%\^&*-+\/=><]=\)\([^ ]\)/\1 \2 \3/ge
 " 在操作符前后加空格
     %s/\([^= ]\)\([<>=]\)\([^= ]\)/\1 \2 \3/ge
@@ -322,7 +415,7 @@ func! CompileRunclang()
 endfunc
 
 
-func OnlyComp()
+func! OnlyComp()
     exec"w"
     exec '!date +\%T'
     if &filetype == 'c'
@@ -334,7 +427,44 @@ func OnlyComp()
 endfunc
 
 
-func Valgrind()
+func!  InsertStatuslineColor(mode)
+    if a:mode == 'i'
+        hi statusline guibg=peru
+        "
+    elseif a:mode == 'r'
+        "
+        hi statusline guibg=blue
+        "
+    else
+        "
+        hi statusline guibg=black
+        "
+    endif
+    "
+endfunction
+
+
+func! Mode()
+    if mode() == 'n'
+        return "NORMAL"
+    endif
+    if mode() == 'i'
+        return "INSERT"
+    endif
+    if mode() == 'v'
+        return "VISUAL"
+    endif
+    if mode() == 'V'
+    return "V-LINE"
+    endif
+    if mode() == 'V'
+        return "V-BLCK"
+    endif
+    return mode("fji")
+endfunc
+
+
+func! Valgrind()
     if g:exename == 1
         exec"!valgrind --leak-check=full -v --show-leak-kinds=all ./%<" 
     else 
@@ -344,7 +474,15 @@ endfunc
 "C,C++运行
 
 
-func RUN()
+func!  ClosePair(char)
+    if getline('.')[col('.') - 1] == a:char
+        return "\<Right>" else
+        return a:char
+    endif
+endfunction
+
+
+func! RUN()
     if g:isgui==0 
         exec"call RUNexe()<CR><cr>"
     endif
@@ -352,7 +490,7 @@ endfunc
 let g:asyn=0
 
 
-func RUNexe()
+func! RUNexe()
     "exec '!date +\%T'
     if g:qt == 1 && (&filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c')
         if g:asyn == 1
@@ -378,7 +516,7 @@ func RUNexe()
         exec "!lua5.3 %"
     endif
 endfunc
-func Complily()
+func! Complily()
     if g:qt == 1
         exec 'AsyncRun now=$(pwd)&&./${now\#\#*/}'
     endif
@@ -399,11 +537,11 @@ map <C-F5> <F4><CR><F5>
 "定义FormartSrc()
 
 
-func FormartSrc()
+func! FormartSrc()
         exec "w"
     if &filetype == 'c'
-        "exec "!astyle --style=ansi --suffix=none   -A1 %"
-        "exec "!astyle --style=ansi --suffix=none   -p -A1 %"
+        "exec "!astyle --style=ansi --suffix=none   -A1 -xL %"
+        "exec "!astyle --style=ansi --suffix=none   -p -A1 -xL %"
     elseif &filetype == 'cpp' || &filetype == 'hpp'
         "exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none -p -xg -xd %> /dev/null 2>&1"
         exec "r !astyle --style=ansi  -p   %  > /dev/null 2>&1"
@@ -436,84 +574,37 @@ if has("autocmd")
                 \ endif
 endif
 "当打开vim且没有文件时自动打开NERDTree
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd vimenter *.py,*.c,*.cpp,*.h,*.java,*.html,*.js,*.sh TagbarToggle 
 " 只剩 NERDTree时自动关闭
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " 设置当文件被改动时自动载入
-set autoread
 " quickfix模式
-autocmd FileType c,cpp map <buffer> <leader><space> :w<CR>:make<cr>
-autocmd FileType python exec' call SetMap()'
 "代码补全 preview
 "set 
 "completeopt=menu 
 "允许插件  
 filetype plugin on
 "共享剪贴板  
-set clipboard+=unnamed 
 "自动保存
-set autowrite
-set ruler                   " 打开状态栏标尺
-set cursorline              " 突出显示当前行
 "hi CursorLine cterm=NONE ctermbg=black ctermfg=green guibg=black guifg=white
-set magic                   " 设置魔术
-set guioptions-=T           " 隐藏工具栏
-set guioptions-=m           " 隐藏菜单栏
-set foldmethod=manual
 "set foldcolumn=0
 ""set foldmethod=indent 
-highlight Folded guibg=grey guifg=blue
 "set foldlevel=0 
 " 不要使用vi的键盘模式，而是vim自己的
-set nocompatible
 " 去掉输入错误的提示声音
-set noeb
 " 在处理未保存或只读文件的时候，弹出确认
-set confirm
 "禁止生成临时文件
-set nobackup
-set noswapfile
 "搜索忽略大小写
-set ignorecase
-set linespace=0
 " 增强模式中的命令行自动完成操作
-set wildmenu
 " 使回格键（backspace）正常处理indent, eol, start等
-set backspace=2
 " 允许backspace和光标键跨越行边界
-set whichwrap+=<,>,h,l
 " 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-set mouse=c
-set selection=exclusive
-set selectmode=mouse,key
 " 通过使用: commands命令，告诉我们文件的哪一行被改变过
-set report=0
 " 在被分割的窗口间显示空白，便于阅读
-set fillchars=vert:\ ,stl:\ ,stlnc:\
 " 高亮显示匹配的括号
-set showmatch
 " 匹配括号高亮的时间（单位是十分之一秒）
-set matchtime=2
 " 光标移动到buffer的顶部和底部时保持3行距离
-set scrolloff=3
 " 为C程序提供自动缩进
-"自动补全
-inoremap ( ()<ESC>i
-inoremap ) <C-R>=ClosePair(')')<CR>
-inoremap { {<CR>}<ESC>O
-inoremap [ []<ESC>i
-inoremap ] <C-R>=ClosePair(']')<CR>
-inoremap " ""<ESC>i
-inoremap ' ''<ESC>i
 
 
-function! ClosePair(char)
-    if getline('.')[col('.') - 1] == a:char
-        return "\<Right>" else
-        return a:char
-    endif
-endfunction
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
@@ -526,51 +617,14 @@ let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
-set iskeyword+=.
-set termencoding=utf-8
-set encoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
-"set nocompatible               " be iMproved
-"filetype off                   " required!
-set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-" let Vundle manage Vundle
-" required! 
-" My Bundles here:
-"
-" original repos on github
-"let g:indentLine_char = '┊'
-"Bundle 'tpope/vim-rails.git'
-" vim-scripts repos
-" non github repos
-"Bundle 'Python-mode-klen'
-"Bundle 'JavaScript-Indent'
-Bundle 'Better-Javascript-Indentation'
-Plugin 'skywind3000/asyncrun.vim'
-"django
-"Bundle 'FredKSchott/CoVim'
-"Bundle 'djangojump'
-" ...
 let g:html_indent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 filetype plugin indent on     " required!
 "
 nmap <silent>tl :silent TagbarToggle<CR>
-" 启动时自动focus
-"let g:tagbar_autofocus = 1
-" for ruby, delete if you do not need
-"let g:tagbar_type_ruby = {
-    "\ 'kinds' : [
-        "\ 'm:modules',
-        "\ 'c:classes',
-        "\ 'd:describes',
-        "\ 'C:contexts',
-        "\ 'f:methods',
-        "\ 'F:singleton methods'
-    "\ ]
-"\ }
 "ctrlp设置
 let g:ctrlp_map = '<leader>f'
 let g:ctrlp_cmd = 'CtrlP'
@@ -585,24 +639,10 @@ let g:ctrlp_max_height=15
 let g:ctrlp_match_window_reversed=0
 let g:ctrlp_mruf_max=500
 let g:ctrlp_follow_symlinks=1
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Linux
 "
-"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
-"let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
-"let g:ctrlp_extensions = ['funky']
-"let NERDTreeIgnore=['\.pyc']
-"DIY/mZ"nmap
-"" configure syntastic syntax checking to check on open as well as save
-set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 1
 let g:ycm_semantic_triggers = {}
 " 引入 C++ 标准库tags
-set tags+=/data/misc/software/misc./vim/stdcpp.tags
 let g:ycm_semantic_triggers.c = ['->', '.']
 let g:ycm_semantic_triggers.lua=[':', '.']
 let g:ycm_semantic_triggers.python=['->']
@@ -619,141 +659,18 @@ let g:ycm_min_num_of_chars_for_completion=2
 let g:ycm_confirm_extra_conf=0
 let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
-"inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
-"上下左右键的行为 会显示其他信息
-"inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
-"inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
-"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
-"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
-Plugin 'suan/vim-instant-markdown'
-Plugin 'rdnetto/YCM-Generator' 
-Plugin 'jsbeautify'
-Plugin 'The-NERD-Commenter'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-"Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'django_templates.vim'
-Plugin 'derekwyatt/vim-fswitch'
-Plugin 'othree/html5.vim'
-Plugin 'Django-Projects'
-Plugin 'chiel92/vim-autoformat'
-Plugin 'VundleVim/Vundle.Vim'
-Plugin 'tpope/vim-fugitive'"remove github used
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}"//html <p></p>
-Plugin 'yggdroot/indentline'
-Plugin 'L9'
-Plugin 'majutsushi/tagbar'
-Plugin 'FuzzyFinder'
-Plugin 'wincent/command-t'
-Plugin 'https://github.com/davidhalter/jedi-vim.git'
-Plugin 'Auto-Pairs'
-"Plugin 'python-imports.vim'
-Plugin 'CaptureClipboard'
-Plugin 'thinca/vim-quickrun'
-Plugin 'ctrlp-modified.vim'
-Plugin 'last_edit_marker.vim'
-Plugin 'synmark.vim'
-Plugin 'SQLComplete.vim'
-Plugin 'Javascript-OmniCompletion-with-YUI-and-j'
-"Plugin 'jslint.vim'
-Plugin 'pangloss/vim-javascript'
-Plugin 'Vim-Script-Updater'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ctrlp.vim'
-Plugin 'tacahiroy/ctrlp-funky'
-"自定义安装
-Plugin 'YouCompleteMe'
-Plugin 'c.vim'
-Plugin 'cpp.vim'
-Plugin 'fcitx.vim'
-Plugin 'grep.vim'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'surround.vim'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'vim-signature'
-Plugin 'sjl/gundo.vim'
-nnoremap <leader>h :GundoToggle<CR>
 "easymotion 配置
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
-map <Leader><leader>h <Plug>(easymotion-linebackward)
-map <Leader><Leader>j <Plug>(easymotion-j)
-map <Leader><Leader>k <Plug>(easymotion-k)
-map <Leader><leader>l <Plug>(easymotion-lineforward)
-"unmap ,,s
-"map <leader>r <Plug>(easymotion-prefix)
-" 重复上一次操作, 类似repeat插件, 很强大
-map <Leader><leader>. <Plug>(easymotion-repeat)
-colors Blue2
-"colors SolarizedDark
-"hi CursorLine  term=reverse cterm=reverse ctermbg=Black  guibg=SkyBlue
-"highlight CursorLine guifg=SkyBlue    ctermbg=08" ctermfg=Green
-function! InsertStatuslineColor(mode)
-    if a:mode == 'i'
-        hi statusline guibg=peru
-        "
-    elseif a:mode == 'r'
-        "
-        hi statusline guibg=blue
-        "
-    else
-        "
-        hi statusline guibg=black
-        "
-    endif
-    "
-endfunction
-"au InsertEnter * call InsertStatuslineColor(v:insertmode)
-""
-""au InsertLeave * hi statusline guibg=blue guifg=white
-"
-"hi statusline guibg=black
-hi YcmWarningSection  term=bold ctermfg=11 gui=bold guifg=Yellow
-hi Function  term=bold ctermfg=121 gui=bold guifg=SeaGreen
-"颜色
-hi Function ctermfg=178
-hi linenr ctermfg = 214
 let g:indent_guides_auto_colors = 1
 let g:indent_guides_guide_size = 1 
 "hi CursorLine cterm=reverse ctermbg=242
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
-autocmd GUIEnter * colorscheme solarized
-hi statusline ctermbg=39 ctermfg=241
-hi IndentGuidesOdd guibg=red ctermbg=3
-hi IndentGuidesEven guibg=green ctermbg=4
-hi type ctermfg=167
 "209 
 "highlight Functions
 "hi statuslineNC ctermfg=8
 se mps-="[:]"
 se showmode
 se mps+="=:;"
-set showcmd         " 输入的命令显示出来，看的清楚些  
-    "let g:SignatureMap = {
-            "\ 'Leader'             :  "m",
-            "\ 'PlaceNextMark'      :  "m,",
-            "\ 'ToggleMarkAtLine'   :  "m.",
-            "\ 'PurgeMarksAtLine'   :  "m-",
-            "\ 'DeleteMark'         :  "dm",
-            "\ 'PurgeMarkers'       :  "m<BS>",
-            "\ 'PurgeMarks'         :  "mda",
-            "\ 'GotoNextLineAlpha'  :  "'[",
-            "\ 'GotoPrevLineAlpha'  :  "']",
-            "\ 'GotoNextSpotAlpha'  :  "`[",
-            "\ 'GotoPrevSpotAlpha'  :  "`]",
-            "\ 'GotoNextLineByPos'  :  "['",
-            "\ 'GotoPrevLineByPos'  :  "]'",
-            "\ 'GotoNextSpotByPos'  :  "mn",
-            "\ 'GotoPrevSpotByPos'  :  "mp",
-            "\ 'GotoNextMarker'     :  "[+",
-            "\ 'GotoPrevMarker'     :  "[-",
-            "\ 'GotoNextMarkerAny'  :  "]=",
-            "\ 'GotoPrevMarkerAny'  :  "[=",
-            "\ 'ListLocalMarks'     :  "ms",
-            "\ 'ListLocalMarkers'   :  "m?"
-            "\ }
  let g:indent_guides_enable_on_vim_startup=0
     " 从第二层开始可视化显示缩进
     let g:indent_guides_start_level=1
@@ -763,25 +680,6 @@ set showcmd         " 输入的命令显示出来，看的清楚些
 :nmap  gz <Plug>IndentGuidesToggle
 
 
-func Mode()
-    if mode() == 'n'
-        return "NORMAL"
-    endif
-    if mode() == 'i'
-        return "INSERT"
-    endif
-    if mode() == 'v'
-        return "VISUAL"
-    endif
-    if mode() == 'V'
-    return "V-LINE"
-    endif
-    if mode() == 'V'
-        return "V-BLCK"
-    endif
-    return mode("fji")
-endfunc
-"set statusline=%F%m%r%h%w\ \ \ %Y\ \ \ %{Mode()}\ \ \ \ \ [%l\,%v]\ \ \ %p%%\ %{strftime(\"\ -\ %H:%M\")}   "状态行显示的内容  
 "powerline setup 应该放在
 "set statusline后面
 python from powerline.vim import setup as powerline_setup
@@ -794,43 +692,27 @@ let g:quickrun_config = {
 \}
 nnoremap gG :Grep
 " 禁止光标闪烁
-set gcr=a:block-blinkon0
 " 禁止显示滚动条
-set guioptions-=l
-set guioptions-=L
-set guioptions-=r
 set guioptions-=R
 " 禁止显示菜单和工具条
-set guioptions-=m
-set guioptions-=T
 "配置及时生效
-"autocmd BufWritePost $MYVIMRC source $MYVIMRC
 let g:quickrun_no_default_key_mappings = 1
 nmap <Leader>r <Plug>(quickrun)
 map <F9> :QuickRun<CR>
-set relativenumber
 let NERDTreeWinSize=26
 let g:tagbar_bin='ctags'
-hi CursorLine ctermbg=238
 let g:tagbar_width=32
-hi comment ctermfg=141
-hi Identi ctermfg=39
-hi string ctermfg=6
 let g:ycm_python_binary_path = '/usr/bin/python3.5'
 let g:html5_event_handler_attributes_complete = 0
 let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
 let g:html5_aria_attributes_complete = 0
 " 开启保存 undo 历史功能
-set undofile
-set cindent
 " undo 历史保存路径
-set undodir=~/tmp/.undo_history/
 "noew aa
 "
 "
 let g:EclimCompletionMethod = 'omnifunc' 
-autocmd FileType java se completeopt-=preview
 "se sessionop+=resize
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 "
@@ -848,18 +730,11 @@ let g:ycm_filetype_blacklist = {
       \}
 "let g:ycm_collect_identifiers_from_comments_and_strings = 0
 let g:ycm_collect_identifiers_from_tags_files = 1
-inoremap <c-j> <c-x><c-p>
 "let g:syntastic_always_populate_loc_list = 1
 let g:asyncrun_bell=1
-nnoremap ,yd i<space><esc>l:call YoudaoCursorTranslate()<cr>
 
 
-func! Timerf(timer)
-    echo "hello"
-endfunction
-set termguicolors
 colorscheme SolarizedDark
-set noshowmode
 "打开文件类型检测, 加了这句才可以用智能补全
 "set completeopt=longest,menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -925,3 +800,124 @@ set noshowmode
 "let g:jedi#rename_command = "<leader>r"
 "hi pmenu ctermbg=23
 "hi pmenusel ctermbg=232
+    "let g:SignatureMap = {
+            "\ 'Leader'             :  "m",
+            "\ 'PlaceNextMark'      :  "m,",
+            "\ 'ToggleMarkAtLine'   :  "m.",
+            "\ 'PurgeMarksAtLine'   :  "m-",
+            "\ 'DeleteMark'         :  "dm",
+            "\ 'PurgeMarkers'       :  "m<BS>",
+            "\ 'PurgeMarks'         :  "mda",
+            "\ 'GotoNextLineAlpha'  :  "'[",
+            "\ 'GotoPrevLineAlpha'  :  "']",
+            "\ 'GotoNextSpotAlpha'  :  "`[",
+            "\ 'GotoPrevSpotAlpha'  :  "`]",
+            "\ 'GotoNextLineByPos'  :  "['",
+            "\ 'GotoPrevLineByPos'  :  "]'",
+            "\ 'GotoNextSpotByPos'  :  "mn",
+            "\ 'GotoPrevSpotByPos'  :  "mp",
+            "\ 'GotoNextMarker'     :  "[+",
+            "\ 'GotoPrevMarker'     :  "[-",
+            "\ 'GotoNextMarkerAny'  :  "]=",
+            "\ 'GotoPrevMarkerAny'  :  "[=",
+            "\ 'ListLocalMarks'     :  "ms",
+            "\ 'ListLocalMarkers'   :  "m?"
+            ""\ }
+" let Vundle manage Vundle
+" required! 
+" My Bundles here:
+"
+" original repos on github
+"let g:indentLine_char = '┊'
+"Bundle 'tpope/vim-rails.git'
+" vim-scripts repos
+" non github repos
+"Bundle 'Python-mode-klen'
+"Bundle 'JavaScript-Indent'
+Bundle 'Better-Javascript-Indentation'
+Plugin 'skywind3000/asyncrun.vim'
+"django
+"Bundle 'FredKSchott/CoVim'
+"Bundle 'djangojump'
+" ...
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+"set nocompatible               " be iMproved
+"filetype off                   " required!
+" 启动时自动focus
+"let g:tagbar_autofocus = 1
+" for ruby, delete if you do not need
+"let g:tagbar_type_ruby = {
+    "\ 'kinds' : [
+        "\ 'm:modules',
+        "\ 'c:classes',
+        "\ 'd:describes',
+        "\ 'C:contexts',
+        "\ 'f:methods',
+        "\ 'F:singleton methods'
+    "\ ]
+"\ }
+"let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+"let g:ctrlp_custom_ignore = '\v\.(exe|so|dll)$'
+"let g:ctrlp_extensions = ['funky']
+"let NERDTreeIgnore=['\.pyc']
+"DIY/mZ"nmap
+"" configure syntastic syntax checking to check on open as well as save
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 1
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif    "离开插入模式后自动关闭预览窗口
+"inoremap <expr> <CR>       pumvisible() ? "\<C-Y>" : "\<CR>"    "回车即选中当前项
+"上下左右键的行为 会显示其他信息
+"inoremap <expr> <Down>     pumvisible() ? "\<C-N>" : "\<Down>"
+"inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
+"inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
+"inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
+Plugin 'suan/vim-instant-markdown'
+Plugin 'rdnetto/YCM-Generator' 
+Plugin 'jsbeautify'
+Plugin 'The-NERD-Commenter'
+Plugin 'octol/vim-cpp-enhanced-highlight'
+"Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'django_templates.vim'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'othree/html5.vim'
+Plugin 'Django-Projects'
+Plugin 'chiel92/vim-autoformat'
+Plugin 'VundleVim/Vundle.Vim'
+Plugin 'tpope/vim-fugitive'"remove github used
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}"//html <p></p>
+Plugin 'yggdroot/indentline'
+Plugin 'L9'
+Plugin 'majutsushi/tagbar'
+Plugin 'FuzzyFinder'
+Plugin 'wincent/command-t'
+Plugin 'https://github.com/davidhalter/jedi-vim.git'
+Plugin 'Auto-Pairs'
+"Plugin 'python-imports.vim'
+Plugin 'CaptureClipboard'
+Plugin 'thinca/vim-quickrun'
+Plugin 'ctrlp-modified.vim'
+Plugin 'last_edit_marker.vim'
+Plugin 'synmark.vim'
+Plugin 'SQLComplete.vim'
+Plugin 'Javascript-OmniCompletion-with-YUI-and-j'
+"Plugin 'jslint.vim'
+Plugin 'pangloss/vim-javascript'
+Plugin 'Vim-Script-Updater'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'ctrlp.vim'
+Plugin 'tacahiroy/ctrlp-funky'
+"自定义安装
+Plugin 'YouCompleteMe'
+Plugin 'c.vim'
+Plugin 'cpp.vim'
+Plugin 'fcitx.vim'
+Plugin 'grep.vim'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'surround.vim'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'vim-signature'
+Plugin 'sjl/gundo.vim'
+

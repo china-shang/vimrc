@@ -5,16 +5,13 @@ nnoremap gb :Buffers<cr>
 nnoremap tn :tabn<cr>
 nnoremap tp :tabp<cr>
 nnoremap ,gc :tabc<cr>
-
 "nnoremap en :let exename=
 nnoremap gM :split Makefile<cr>
-nmap cx xi
 nnoremap <c-w> <c-w><c-w>
 nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
 nnoremap <c-h> <c-w><c-h>
 nnoremap <c-l> <c-w><c-l>
-
 inoremap <C-D> <ESC>A
 inoremap <C-F> <ESC>A<ESC>
 :silent !echo -ne "\e]12;IndianRed2\007"
@@ -36,27 +33,14 @@ nnoremap /N  :nohlsearch<CR>
 nmap uc :exec"!cp ~/.ycm_extra_conf_c.py ~/.ycm_extra_conf.py"<CR>
 nmap ucc :exec"!cp ~/.ycm_extra_conf_cpp.py ~/.ycm_extra_conf.py"<CR>
 nmap uqt :exec"!cp ~/.ycm_extra_conf_qt.py ~/.ycm_extra_conf.py"<cr>
-
-"nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
-"nmap \ \c
-vmap \ \cc
 nmap tt :%s/\t/    /g<CR>
 map <S-Left> :tabp<CR>
 map <S-Right> :tabn<CR>
 map! <C-Z> <ESC>zzi
-"map! <C-O> <C-Y>,
-"map <C-A> ggVG$"+y
 nmap <C-E> $
 "nmap <C-A> ^
 nnoremap <F12>  :call Clean()<CR><cr><f6><cr><cr>
-"map <C-W> <C-W>
-"imap <C-K> <C-Y>,
-"imap <C-T> <C-Q><TAB>
-"imap <C-T> <TAB>
-"imap <C-J> <ESC>
 imap <C-V> <ESC><ESC>"*pa
-"map <C-V> <ESC>"*pa
-"imap <C-A> <ESC>^
 imap <C-E> <ESC>$
 vmap <C-Y> "+y
 noremap <C-C> <ESC>
@@ -64,7 +48,7 @@ nnoremap <F2> :g/^\s*$/d<CR>
 nnoremap <C-F2> :vert diffsplit 
 map <F3> :NERDTreeToggle<CR>
 imap <F3> <ESC> :NERDTreeToggle<CR>
-map <C-F3> \be  
+"map <C-F3> \be  
 nmap <C-F5> :call OnlyComp()<CR>
 nmap <F4> :call CompileRunclang()<CR>
 map <F8> :call Rungdb()<CR>
@@ -107,17 +91,15 @@ au FileType html setlocal dict+=~/.vim/dict/css.dict
 "
 "syntastic相关
 execute pathogen#infect()
-"let g:syntastic_python_checkers=['flake8']
-let g:syntastic_python_checkers=['pylint']
+let g:syntastic_python_checkers=['flake8']
+"let g:syntastic_python_checkers=['pylint']
 let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-
-let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
+"let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
 "let g:syntastic_python_flake8_args='--select=E123'
 "golang
 "Processing... % (ctrl+c to stop)
 let g:fencview_autodetect=0
 set rtp+=$GOROOT/misc/vim
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -131,14 +113,11 @@ set go=             " 不要图形按钮
 "color desert     " 设置背景主题  
 "color ron     " 设置背景主题  
 "color torte    " 设置背景主题  
-set guifont=Courier_New:h10:cANSI   " 设置字体  
+set guifont=Source\ Code\ Pro\ for\ Powerline\ Regular\ 10   " 设置字体  
+
 let g:qt=0
-autocmd InsertLeave * se cul  " 用浅色高亮当前行  
-autocmd InsertEnter * se nocul    " 用浅色高亮当前行  
-"autocmd InsertLeave *.py w
 set ruler           " 显示标尺  
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)  
-    
 set scrolloff=3     " 光标移动到buffer的顶部和底部时保持3行距离  
 "set statusline=%F%m%r%h%w\ \ \ \ \ \ [POS=%l,%v]\ [%p%%]\ %{strftime(\"\ -\ %H:%M:%S\")}   "状态行显示的内容  
 set laststatus=2    " 启动显示状态行(1),总是显示状态行(2)  
@@ -184,28 +163,19 @@ set viminfo+=!
 " 带有如下符号的单词不要被换行分割
 set iskeyword+=_,$,@,%,#,-
 " 字符间插入的像素行数目
-
 "markdown配置
 au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{lua}   set filetype=lua
 au BufRead,BufNewFile *.{js}   set filetype=javascript
-"rkdown to HTML  
-"nmap Fi :!firefox &   <CR><CR>
-"   
-"       
-"           
-"               
-"将tab替换为空格
-
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
 autocmd BufReadPost *.pro exec ":call Setqtpro()"
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+
+
 func Setqtpro()
     let str = getline("$") && g:qt == 1
     if str != "QT += widgets"
@@ -215,12 +185,15 @@ func Setqtpro()
     endif
 endfunc
 ""定义函数SetTitle，自动插入文件头 
+
+
 func SetMap()
     if &filetype == 'python'
         exec 'inoremap <c-f> <esc>A:<esc>o'
         exec 'inoremap <c-d> <esc>A:<esc>'
     endif
 endfunc
+
 
 func SetTitle() 
     "如果文件类型为.sh文件 
@@ -231,12 +204,10 @@ func SetTitle()
         call setline(1,"#!/usr/bin/env python")
         call append(line("."),"# coding=utf-8")
         call append(line(".")+1, "") 
-
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
         call append(line("."),"# encoding: utf-8")
         call append(line(".")+1, "")
-
         "    elseif &filetype == 'mkd'
         "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
     else 
@@ -270,8 +241,6 @@ func SetTitle()
     "新建文件后，自动定位到文件末尾
 endfunc 
 autocmd BufNewFile * normal G
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "键盘命令
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -279,9 +248,6 @@ autocmd BufNewFile * normal G
 " 选中状态下 Ctrl+c 复制
 set mouse=v
 set clipboard=unnamed
-"去空行  
-"比较文件  
-"nnoremap <Leader>fu :CtrlPFunky<CR>
 nnoremap <C-N> :CtrlPFunky<CR>
 nnoremap <Leader>fu :execute 'CtrlPFunky ' . expand('<cword>')<CR>
 let g:ctrlp_funky_syntax_highlight = 1
@@ -291,19 +257,31 @@ let g:ctrlp_extensions = ['funky']
 autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 autocmd BufRead,BufNewFile *.c,*.cpp,*.h inoremap <C-F> <esc>A;<esc>
 "IDE部分
-func Clean()
-    %s/\([^ ]\)\([!%\^&*-+\/=><]=\)\([^ ]\)/\1 \2 \3/ge
-    %s/\([^= ]\)\([<>=]\)\([^= ]\)/\1 \2 \3/ge
-    %s/\(include.*\)<\s\+/\1</ge
-    %s/,\([^ ]\)/, \1/ge
-    %s/- >/->/ge
-    %s/>\s\+>/>>/ge
-    %s/<\s\+</<</ge
-endfunc
 "C，C++ 按F5编译运行
 let Lib = " "
 let makeprg="clang\ %\ -o\ %< -Wextra\ -g\ -Wall"
 let exename = 1
+
+
+func Clean()
+    %s/\([^ ]\)\([!%\^&*-+\/=><]=\)\([^ ]\)/\1 \2 \3/ge
+" 在操作符前后加空格
+    %s/\([^= ]\)\([<>=]\)\([^= ]\)/\1 \2 \3/ge
+" 去掉" == "符号中间的空格
+    %s/\(include.*\)<\s\+/\1</ge
+" 去掉#include <  > 括号边多余的空格 
+    %s/,\([^ ]\)/, \1/ge
+" , 后家空格
+    %s/- >/->/ge
+    %s/>\s\+>/>>/ge
+    %s/<\s\+</<</ge
+    if &filetype == 'python'
+        %s/^#\s*/# /ge
+    endif
+" 去掉 ->  >>   <<  中多余的空格 
+endfunc
+
+
 func! CompileRunclang()
     exec "w"
     "exec 'AsyncRun date +\%T'
@@ -342,6 +320,8 @@ func! CompileRunclang()
         exec "!firefox %.html &"
     endif
 endfunc
+
+
 func OnlyComp()
     exec"w"
     exec '!date +\%T'
@@ -352,6 +332,8 @@ func OnlyComp()
         exec "AsyncRun clang++ % -c -Wall -Wextra -g" g:Lib
     endif
 endfunc
+
+
 func Valgrind()
     if g:exename == 1
         exec"!valgrind --leak-check=full -v --show-leak-kinds=all ./%<" 
@@ -360,12 +342,16 @@ func Valgrind()
     endif
 endfunc
 "C,C++运行
+
+
 func RUN()
     if g:isgui==0 
         exec"call RUNexe()<CR><cr>"
     endif
 endfunc
 let g:asyn=0
+
+
 func RUNexe()
     "exec '!date +\%T'
     if g:qt == 1 && (&filetype == 'cpp' || &filetype == 'hpp'|| &filetype == 'c')
@@ -398,6 +384,8 @@ func Complily()
     endif
 endfunc
 "C,C++的调试
+
+
 func! Rungdb()
     "exec '!date +\%T'
     if g:exename == 1
@@ -406,25 +394,25 @@ func! Rungdb()
         exec '!date +\%T&&printf "\n\n"&&gdb '"./" g:exename
     endif
 endfunc
-
 map <C-F5> <F4><CR><F5>
-
 "代码格式优化化
-
-
 "定义FormartSrc()
+
+
 func FormartSrc()
         exec "w"
     if &filetype == 'c'
-        exec "!astyle --style=ansi --suffix=none   -A1 %"
+        "exec "!astyle --style=ansi --suffix=none   -A1 %"
+        "exec "!astyle --style=ansi --suffix=none   -p -A1 %"
     elseif &filetype == 'cpp' || &filetype == 'hpp'
-        exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none %> /dev/null 2>&1"
+        "exec "r !astyle --style=ansi --one-line=keep-statements -a --suffix=none -p -xg -xd %> /dev/null 2>&1"
+        exec "r !astyle --style=ansi  -p   %  > /dev/null 2>&1"
     elseif &filetype == 'perl'
         exec "!astyle --style=gnu --suffix=none %"
     elseif &filetype == 'py'||&filetype == 'python'
         exec "r !autopep8 -i --aggressive %"
     elseif &filetype == 'java'
-        exec "!astyle --style=java --suffix=none %"
+        exec "!astyle --style=java  -i --suffix=none %"
     elseif &filetype == 'jsp'
         exec "!astyle --style=gnu --suffix=none %"
     elseif &filetype == 'xml'
@@ -436,11 +424,8 @@ func FormartSrc()
     exec "e! %"
 endfunc
 "结束定义FormartSrc
-
 if &filetype == 'c' || &filetype =='cpp'
 endif
-
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 ""实用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -452,9 +437,9 @@ if has("autocmd")
 endif
 "当打开vim且没有文件时自动打开NERDTree
 autocmd vimenter * if !argc() | NERDTree | endif
+autocmd vimenter *.py,*.c,*.cpp,*.h,*.java,*.html,*.js,*.sh TagbarToggle 
 " 只剩 NERDTree时自动关闭
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
 " 设置当文件被改动时自动载入
 set autoread
 " quickfix模式
@@ -521,42 +506,14 @@ inoremap [ []<ESC>i
 inoremap ] <C-R>=ClosePair(']')<CR>
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
+
+
 function! ClosePair(char)
     if getline('.')[col('.') - 1] == a:char
         return "\<Right>" else
         return a:char
     endif
 endfunction
-"打开文件类型检测, 加了这句才可以用智能补全
-"set completeopt=longest,menu
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let Tlist_Sort_Type = "name"    " 按照名称排序  
-"let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
-"let Tlist_Compart_Format = 1    " 压缩方式  
-"let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
-"let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
-""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
-"let Tlist_Show_One_File=0            "不同时显示多个文件的tag，只显示当前文件的
-""设置tags  
-"set tags=tags;  
-"set autochdir 
-
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"其他东东
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"默认打开Taglist 
-"let Tlist_Auto_Open=1 
-"""""""""""""""""""""""""""""" 
-" Tag list (ctags) 
-"""""""""""""""""""""""""""""""" 
-"let Tlist_Ctags_Cmd = '/usr/local/bin/ctags' 
-"let Tlist_Show_One_File = 0 "不同时显示多个文件的tag，只显示当前文件的 
-"let Tlist_File_Fold_Auto_Close = 0
-"let Tlist_Exit_OnlyWindow = 1 "如果taglist窗口是最后一个窗口，则退出vim 
-"let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
-" minibufexpl插件的一般设置
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
 let g:miniBufExplMapCTabSwitchBufs = 1
@@ -573,18 +530,13 @@ set iskeyword+=.
 set termencoding=utf-8
 set encoding=utf8
 set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
-
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
 "set nocompatible               " be iMproved
 "filetype off                   " required!
-
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-
 " let Vundle manage Vundle
 " required! 
-
 " My Bundles here:
 "
 " original repos on github
@@ -596,9 +548,7 @@ call vundle#rc()
 "Bundle 'JavaScript-Indent'
 Bundle 'Better-Javascript-Indentation'
 Plugin 'skywind3000/asyncrun.vim'
-
 "django
-
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
 " ...
@@ -608,10 +558,8 @@ let g:html_indent_style1 = "inc"
 filetype plugin indent on     " required!
 "
 nmap <silent>tl :silent TagbarToggle<CR>
-
 " 启动时自动focus
 "let g:tagbar_autofocus = 1
-
 " for ruby, delete if you do not need
 "let g:tagbar_type_ruby = {
     "\ 'kinds' : [
@@ -648,7 +596,6 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.png,*.jpg,*.gif     " MacOSX/Li
 set statusline+=%#warningmsg#
 "set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 0
 "let g:syntastic_check_on_open = 1
@@ -726,7 +673,6 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-signature'
 Plugin 'sjl/gundo.vim'
-
 nnoremap <leader>h :GundoToggle<CR>
 "easymotion 配置
 let g:EasyMotion_smartcase = 1
@@ -744,9 +690,7 @@ colors Blue2
 "hi CursorLine  term=reverse cterm=reverse ctermbg=Black  guibg=SkyBlue
 "highlight CursorLine guifg=SkyBlue    ctermbg=08" ctermfg=Green
 function! InsertStatuslineColor(mode)
-
     if a:mode == 'i'
-
         hi statusline guibg=peru
         "
     elseif a:mode == 'r'
@@ -760,9 +704,9 @@ function! InsertStatuslineColor(mode)
     endif
     "
 endfunction
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-"
-au InsertLeave * hi statusline guibg=orange guifg=white
+"au InsertEnter * call InsertStatuslineColor(v:insertmode)
+""
+""au InsertLeave * hi statusline guibg=blue guifg=white
 "
 "hi statusline guibg=black
 hi YcmWarningSection  term=bold ctermfg=11 gui=bold guifg=Yellow
@@ -771,9 +715,7 @@ hi Function  term=bold ctermfg=121 gui=bold guifg=SeaGreen
 hi Function ctermfg=178
 hi linenr ctermfg = 214
 let g:indent_guides_auto_colors = 1
-
 let g:indent_guides_guide_size = 1 
-
 "hi CursorLine cterm=reverse ctermbg=242
 autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
@@ -784,7 +726,7 @@ hi IndentGuidesEven guibg=green ctermbg=4
 hi type ctermfg=167
 "209 
 "highlight Functions
-hi statuslineNC ctermfg=8
+"hi statuslineNC ctermfg=8
 se mps-="[:]"
 se showmode
 se mps+="=:;"
@@ -819,6 +761,8 @@ set showcmd         " 输入的命令显示出来，看的清楚些
     let g:indent_guides_guide_size=1
     " 快捷键 i 开/关缩进可视化
 :nmap  gz <Plug>IndentGuidesToggle
+
+
 func Mode()
     if mode() == 'n'
         return "NORMAL"
@@ -837,10 +781,12 @@ func Mode()
     endif
     return mode("fji")
 endfunc
-"python from powerline.vim import setup as powerline_setup
-"python powerline_setup()
-"python del powerline_setup
-set statusline=%F%m%r%h%w\ \ \ %Y\ \ \ %{Mode()}\ \ \ \ \ [%l\,%v]\ \ \ %p%%\ %{strftime(\"\ -\ %H:%M\")}   "状态行显示的内容  
+"set statusline=%F%m%r%h%w\ \ \ %Y\ \ \ %{Mode()}\ \ \ \ \ [%l\,%v]\ \ \ %p%%\ %{strftime(\"\ -\ %H:%M\")}   "状态行显示的内容  
+"powerline setup 应该放在
+"set statusline后面
+python from powerline.vim import setup as powerline_setup
+python powerline_setup()
+python del powerline_setup
 let g:quickrun_config = {
 \   "_" : {
 \       "outputter" : "message",
@@ -864,50 +810,27 @@ nmap <Leader>r <Plug>(quickrun)
 map <F9> :QuickRun<CR>
 set relativenumber
 let NERDTreeWinSize=26
-    
 let g:tagbar_bin='ctags'
 hi CursorLine ctermbg=238
 let g:tagbar_width=32
 hi comment ctermfg=141
 hi Identi ctermfg=39
 hi string ctermfg=6
-"let g:jedi#auto_initialization = 1
-"let g:jedi#auto_vim_configuration = 1
-"let g:jedi#use_tabs_not_buffers = 1
-"let g:jedi#use_splits_not_buffers = "left"
-"let g:jedi#popup_on_dot = 0
-"let g:jedi#popup_select_first = 0
-"let g:jedi#show_call_signatures = "1"
-
-"let g:jedi#goto_command = "<leader>d"
-"let g:jedi#goto_assignments_command = "<leader>g"
-"let g:jedi#goto_definitions_command = ""
-"let g:jedi#documentation_command = "K"
-"let g:jedi#usages_command = "<leader>n"
-"let g:jedi#completions_command = "<C-Space>"
-"let g:jedi#rename_command = "<leader>r"
-
 let g:ycm_python_binary_path = '/usr/bin/python3.5'
 let g:html5_event_handler_attributes_complete = 0
 let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
-
 let g:html5_aria_attributes_complete = 0
 " 开启保存 undo 历史功能
 set undofile
 set cindent
 " undo 历史保存路径
 set undodir=~/tmp/.undo_history/
-
 "noew aa
 "
 "
-
-"hi pmenu ctermbg=23
-"hi pmenusel ctermbg=232
 let g:EclimCompletionMethod = 'omnifunc' 
 autocmd FileType java se completeopt-=preview
-
 "se sessionop+=resize
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 "
@@ -916,7 +839,6 @@ se modifiable
 let g:instant_markdown_allow_unsafe_content = 1
 "let g:jedi#force_py_version = 3
 let g:jedi#squelch_py_warning= 0 
-
 let g:ycm_enable_diagnostic_highlighting = 0
 "let g:ycm_enable_diagnostic_signs = 0
 "let g:ycm_max_diagnostics_to_display = 0
@@ -930,6 +852,76 @@ inoremap <c-j> <c-x><c-p>
 "let g:syntastic_always_populate_loc_list = 1
 let g:asyncrun_bell=1
 nnoremap ,yd i<space><esc>l:call YoudaoCursorTranslate()<cr>
+
+
 func! Timerf(timer)
     echo "hello"
 endfunction
+set termguicolors
+colorscheme SolarizedDark
+set noshowmode
+"打开文件类型检测, 加了这句才可以用智能补全
+"set completeopt=longest,menu
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let Tlist_Sort_Type = "name"    " 按照名称排序  
+"let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
+"let Tlist_Compart_Format = 1    " 压缩方式  
+"let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
+"let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
+""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
+"let Tlist_Show_One_File=0            "不同时显示多个文件的tag，只显示当前文件的
+""设置tags  
+"set tags=tags;  
+"set autochdir 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"其他东东
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"默认打开Taglist 
+"let Tlist_Auto_Open=1 
+"""""""""""""""""""""""""""""" 
+" Tag list (ctags) 
+"""""""""""""""""""""""""""""""" 
+"let Tlist_Ctags_Cmd = '/usr/local/bin/ctags' 
+"let Tlist_Show_One_File = 0 "不同时显示多个文件的tag，只显示当前文件的 
+"let Tlist_File_Fold_Auto_Close = 0
+"let Tlist_Exit_OnlyWindow = 1 "如果taglist窗口是最后一个窗口，则退出vim 
+"let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
+" minibufexpl插件的一般设置
+"nmap md :!~/.vim/markdown.pl % > %.html <CR><CR>
+"nmap \ \c
+"vmap \ \cc
+"map! <C-O> <C-Y>,
+"map <C-A> ggVG$"+y
+"map <C-W> <C-W>
+"imap <C-K> <C-Y>,
+"imap <C-T> <C-Q><TAB>
+"imap <C-T> <TAB>
+"imap <C-J> <ESC>
+"map <C-V> <ESC>"*pa
+"imap <C-A> <ESC>^
+"autocmd InsertLeave * se cul  " 用浅色高亮当前行  
+"autocmd InsertEnter * se nocul    " 用浅色高亮当前行  
+"autocmd InsertLeave *.py w
+"rkdown to HTML  
+"nmap Fi :!firefox &   <CR><CR>
+"   
+"       
+"           
+"               
+"let g:jedi#auto_initialization = 1
+"let g:jedi#auto_vim_configuration = 1
+"let g:jedi#use_tabs_not_buffers = 1
+"let g:jedi#use_splits_not_buffers = "left"
+"let g:jedi#popup_on_dot = 0
+"let g:jedi#popup_select_first = 0
+"let g:jedi#show_call_signatures = "1"
+"let g:jedi#goto_command = "<leader>d"
+"let g:jedi#goto_assignments_command = "<leader>g"
+"let g:jedi#goto_definitions_command = ""
+"let g:jedi#documentation_command = "K"
+"let g:jedi#usages_command = "<leader>n"
+"let g:jedi#completions_command = "<C-Space>"
+"let g:jedi#rename_command = "<leader>r"
+"hi pmenu ctermbg=23
+"hi pmenusel ctermbg=232

@@ -1,4 +1,5 @@
 set mouse=v
+let g:ycm_python_binary_path = '/usr/bin/python3.5'
 set clipboard+=unnamed 
 set cursorline              " 突出显示当前行
 set guioptions-=m           " 隐藏菜单栏
@@ -87,6 +88,7 @@ set lbr
 set et
 set sw=4
 set t_Co=256
+
 filetype on
 " 载入文件类型插件
 filetype plugin on
@@ -99,9 +101,12 @@ au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
 au BufRead,BufNewFile *.{go}   set filetype=go
 au BufRead,BufNewFile *.{lua}   set filetype=lua
 au BufRead,BufNewFile *.{js}   set filetype=javascript
-au BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+au BufRead,BufNewFile *.{py}   set filetype=python
+"au BufRead,BufNewFile *.{qml}   set filetype=javascript
+au BufRead,BufNewFile *.{qml}   set filetype=qml
 au vimenter *.py,*.c,*.cpp,*.h,*.java,*.html,*.js,*.sh TagbarToggle 
-au VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+au vimenter * AirlineTheme solarized
+
 au FileType python exec' call SetMap()'
 au FileType php setlocal dict+=~/.vim/dict/php_funclist.dict
 au FileType css setlocal dict+=~/.vim/dict/css.dict
@@ -109,6 +114,7 @@ au FileType c setlocal dict+=~/.vim/dict/c.dict
 au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
 au FileType scale setlocal dict+=~/.vim/dict/scale.dict
 au FileType javascript setlocal dict+=~/.vim/dict/javascript.dict
+au FileType qml setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal dict+=~/.vim/dict/javascript.dict
 au FileType html setlocal dict+=~/.vim/dict/css.dict
 au BufReadPost *.pro exec ":call Setqtpro()"
@@ -119,8 +125,8 @@ au FileType c,cpp map <buffer> <leader><space> :w<CR>:make<cr>
 au FileType java se completeopt-=preview
 au BufNewFile * normal G
 au BufRead,BufNewFile *.c,*.cpp,*.h inoremap <C-F> <esc>A;<esc>
+au BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
 au bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-au VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
 "au BufWritePost $MYVIMRC source $MYVIMRC
 au VimLeave * :!echo -ne "\e]12;grey\007"
 
@@ -129,34 +135,39 @@ au VimLeave * :!echo -ne "\e]12;grey\007"
 hi YcmWarningSection  term=bold ctermfg=11 gui=bold guifg=Yellow
 hi Function  term=bold ctermfg=121 gui=bold guifg=SeaGreen
 "颜色
-hi Function ctermfg=178
-hi linenr ctermfg = 214
-hi statusline ctermbg=39 ctermfg=241
-hi IndentGuidesOdd guibg=red ctermbg=3
-hi IndentGuidesEven guibg=green ctermbg=4
-hi type ctermfg=167
-hi comment ctermfg=141
-hi Identi ctermfg=39
-hi string ctermfg=6
+"hi Function ctermfg=178
+"hi linenr ctermfg = 214
+"hi statusline ctermbg=39 ctermfg=241
+"au VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
+"au VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
+"hi type ctermfg=167
+"hi comment ctermfg=141
+"hi Identi ctermfg=39
+"hi string ctermfg=6
 hi Folded guibg=grey guifg=blue
-hi CursorLine ctermbg=238
+"hi CursorLine ctermbg=238
 
 
 
 " map区
 nmap gc :close<CR>
-nnoremap ,yd i<space><esc>l:call YoudaoCursorTranslate()<cr>
 inoremap <c-j> <c-x><c-p>
+let mapleader = ","
+inoremap  <>  <><esc>i
 map <Leader><leader>h <Plug>(easymotion-linebackward)
+nmap <leader>fa :CtrlPMixed
 map <Leader><Leader>j <Plug>(easymotion-j)
 map <Leader><Leader>k <Plug>(easymotion-k)
 map <Leader><leader>l <Plug>(easymotion-lineforward)
+
+
 "unmap ,,s
-"map <leader>r <Plug>(easymotion-prefix)
+map <leader><leader>r <Plug>(easymotion-prefix)
 " 重复上一次操作, 类似repeat插件, 很强大
 map <Leader><leader>. <Plug>(easymotion-repeat)
 nnoremap <leader>h :GundoToggle<CR>
 "自动补全
+nmap  <leader>cm :CommandT
 inoremap ( ()<ESC>i
 inoremap ) <C-R>=ClosePair(')')<CR>
 inoremap { {<CR>}<ESC>O
@@ -165,14 +176,14 @@ inoremap ] <C-R>=ClosePair(']')<CR>
 inoremap " ""<ESC>i
 inoremap ' ''<ESC>i
 nnoremap <C-N> :CtrlPFunky<CR>
-nnoremap <Leader>fu :execute 'CtrlPFunky ' . expand('<cword>')<CR>
-nnoremap ,tn :bn <CR> 
+nnoremap <Leader>fu mp:execute 'CtrlPFunky ' . expand('<cword>')<CR>
+nnoremap tn :bn <CR> 
+nnoremap tp :bp <CR> 
 nnoremap td :bd
 nmap co tl:copen<CR>tl
 nnoremap ,,c :.cc<cr>
-nnoremap gb :Buffers<cr>
-nnoremap tn :tabn<cr>
-nnoremap tp :tabp<cr>
+nnoremap ,tn :tabn<cr>
+nnoremap ,tp :tabp<cr>
 nnoremap ,gc :tabc<cr>
 "nnoremap en :let exename=
 nnoremap gM :split Makefile<cr>
@@ -190,7 +201,6 @@ nnoremap <silent>gd :YcmCompleter GoToDeclaration<CR>
 nnoremap <silent>gp :YcmCompleter GetParent<CR>
 nnoremap <silent>gt :YcmCompleter GetType<CR>
 nnoremap <silent>gw :YcmDiags<CR>
-let mapleader = ","
 nmap gm :call Valgrind()<CR>
 nnoremap /N  :nohlsearch<CR>
 nmap uc :exec"!cp ~/.ycm_extra_conf_c.py ~/.ycm_extra_conf.py"<CR>
@@ -209,8 +219,9 @@ vmap <C-Y> "+y
 noremap <C-C> <ESC>
 nnoremap <F2> :g/^\s*$/d<CR> 
 nnoremap <C-F2> :vert diffsplit 
-map <F3> :NERDTreeToggle<CR>
-imap <F3> <ESC> :NERDTreeToggle<CR>
+nmap <F3> :NERDTreeToggle<CR>
+imap <F3> <ESC>:NERDTreeToggle<CR>
+
 "map <C-F3> \be  
 nmap <C-F5> :call OnlyComp()<CR>
 nmap <F4> :call CompileRunclang()<CR>
@@ -228,33 +239,20 @@ nmap <enter> A<enter><ESC>j
 nmap <F5> :call RUNexe()<CR>
 nmap <S-f5> :call RUNexe()<CR>
 "nmap <tab> i<tab><ESC>
-nmap \\ $a//
-nnoremap ,tp :bp <CR> 
-:silent !echo -ne "\e]12;IndianRed2\007"
-"let &t_SI = "\e]12;RoyalBlue1\007"
-let &t_SI = "\e]12;green\007"
-let &t_EI = "\e]12;IndianRed2\007"
+nmap <leader>fb :CtrlPBuffer<cr>
+nmap <leader>ft :CtrlPBufTagAll<cr>
+nmap \\ A//
+" 设置光标颜色
+":silent !echo -ne "\e]12;IndianRed2\007"
+let &t_SI = "\e]12;RoyalBlue1\007"
+"let &t_SI = "\e]12;green\007"
+"let &t_EI = "\e]12;IndianRed2\007"
 "set smartindent
 "
-"syntastic相关
-execute pathogen#infect()
-let g:syntastic_python_checkers=['flake8']
-"let g:syntastic_python_checkers=['pylint']
-let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
-"let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
-"let g:syntastic_python_flake8_args='--select=E123'
-"golang
-"Processing... % (ctrl+c to stop)
-let g:fencview_autodetect=0
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 显示相关  
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable
 syntax on 
-"color desert     " 设置背景主题  
-"color ron     " 设置背景主题  
-"color torte    " 设置背景主题  
-
 let g:qt=0
 "set statusline=%F%m%r%h%w\ \ \ \ \ \ [POS=%l,%v]\ [%p%%]\ %{strftime(\"\ -\ %H:%M:%S\")}   "状态行显示的内容  
 "set foldmethod=   " 折叠  
@@ -266,11 +264,22 @@ endif
 " 自动缩进
 "markdown配置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"syntastic相关
+execute pathogen#infect()
+let g:syntastic_python_checkers=['flake8']
+"let g:syntastic_python_checkers=['pylint']
+let g:syntastic_php_checkers=['php', 'phpcs', 'phpmd']
+"let g:syntastic_python_pylint_args='--disable=C0111,R0903,C0301'
+"let g:syntastic_python_flake8_args='--select=E123'
+"golang
+"Processing... % (ctrl+c to stop)
+let g:fencview_autodetect=0
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 """""新文件标题
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
-
-
 func! Setqtpro()
     let str = getline("$") && g:qt == 1
     if str != "QT += widgets"
@@ -279,9 +288,9 @@ func! Setqtpro()
         exec 'wq'
     endif
 endfunc
+
+
 ""定义函数SetTitle，自动插入文件头 
-
-
 func! SetMap()
     if &filetype == 'python'
         exec 'inoremap <c-f> <esc>A:<esc>o'
@@ -296,8 +305,8 @@ func! SetTitle()
         call setline(1,"\#!/bin/bash") 
         call append(line("."), "") 
     elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python")
-        call append(line("."),"# coding=utf-8")
+        call setline(1,"#!/usr/bin/env python3")
+        call append(line("."),"# -*- coding: utf-8 -*-")
         call append(line(".")+1, "") 
     elseif &filetype == 'ruby'
         call setline(1,"#!/usr/bin/env ruby")
@@ -305,15 +314,17 @@ func! SetTitle()
         call append(line(".")+1, "")
         "    elseif &filetype == 'mkd'
         "        call setline(1,"<head><meta charset=\"UTF-8\"></head>")
-    else 
+    else
         call setline(1, "/*************************************************************************") 
         call append(line("."), "    > File Name: ".expand("%")) 
         "        call append(line(".")+1, "    > : ") 
         "        call append(line(".")+2, "    > : ") 
         call append(line(".")+1, "    > Created Time: ".strftime("%c")) 
-        call append(line(".")+2, " ************************************************************************/") 
+        call append(line(".")+2, "*************************************************************************/") 
     endif
     if g:qt == 1
+        "call append(line(".")+3, "#include <QApplication>")
+        "call append(line(".")+4, "")
         exec "normal G"
     elseif expand("%:e") == 'cpp'
         "call append(line(".")+3, "#include <iostream>")
@@ -333,23 +344,9 @@ func! SetTitle()
         call append(line(".")+3,"public class ".expand("%:r"))
         call append(line(".")+4,"")
     endif
+    exec "normal G"
     "新建文件后，自动定位到文件末尾
 endfunc 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"键盘命令
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" shift tab pages
-" 选中状态下 Ctrl+c 复制
-let g:ctrlp_funky_syntax_highlight = 1
-let g:ctrlp_extensions = ['funky']
-"列出当前目录文件  
-"打开树状文件目录  
-"IDE部分
-"C，C++ 按F5编译运行
-let Lib = " "
-let makeprg="clang\ %\ -o\ %< -Wextra\ -g\ -Wall"
-let exename = 1
-
 
 func! Timerf(timer)
     echo "hello"
@@ -444,24 +441,24 @@ func!  InsertStatuslineColor(mode)
 endfunction
 
 
-func! Mode()
-    if mode() == 'n'
-        return "NORMAL"
-    endif
-    if mode() == 'i'
-        return "INSERT"
-    endif
-    if mode() == 'v'
-        return "VISUAL"
-    endif
-    if mode() == 'V'
-    return "V-LINE"
-    endif
-    if mode() == 'V'
-        return "V-BLCK"
-    endif
-    return mode("fji")
-endfunc
+"func! mode()
+    "if mode() == 'n'
+        "return "normal"
+    "endif
+    "if mode() == 'i'
+        "return "insert"
+    "endif
+    "if mode() == 'v'
+        "return "visual"
+    "endif
+    "if mode() == 'v'
+    "return "v-line"
+    "endif
+    "if mode() == 'v'
+        "return "v-blck"
+    "endif
+    "return mode("fji")
+"endfunc
 
 
 func! Valgrind()
@@ -508,6 +505,8 @@ func! RUNexe()
         exec '!date +\%T&&printf "\n\n"&&python3'" %"
     elseif &filetype == 'sh'
         exec '!date +\%T&&printf "\n\n"&&bash '"%"
+    elseif &filetype == 'qml'
+        exec '!date +\%T&&printf "\n\n"&&qmlscene '"%"
     elseif &filetype == 'javascript'
         exec '!date +\%T&&printf "\n\n"&&node '"%"
     elseif &filetype == 'html'
@@ -548,7 +547,7 @@ func! FormartSrc()
     elseif &filetype == 'perl'
         exec "!astyle --style=gnu --suffix=none %"
     elseif &filetype == 'py'||&filetype == 'python'
-        exec "r !autopep8 -i --aggressive %"
+        exec "r !autopep8 -i --aggressive --ignore=E116 %"
     elseif &filetype == 'java'
         exec "!astyle --style=java  -i --suffix=none %"
     elseif &filetype == 'jsp'
@@ -560,6 +559,8 @@ func! FormartSrc()
         return
     endif
     exec "e! %"
+    exec "w "
+    
 endfunc
 "结束定义FormartSrc
 if &filetype == 'c' || &filetype =='cpp'
@@ -573,37 +574,30 @@ if has("autocmd")
                 \   exe "normal g`\"" |
                 \ endif
 endif
-"当打开vim且没有文件时自动打开NERDTree
-" 只剩 NERDTree时自动关闭
-" 设置当文件被改动时自动载入
-" quickfix模式
-"代码补全 preview
-"set 
-"completeopt=menu 
-"允许插件  
-filetype plugin on
-"共享剪贴板  
-"自动保存
-"hi CursorLine cterm=NONE ctermbg=black ctermfg=green guibg=black guifg=white
-"set foldcolumn=0
-""set foldmethod=indent 
-"set foldlevel=0 
-" 不要使用vi的键盘模式，而是vim自己的
-" 去掉输入错误的提示声音
-" 在处理未保存或只读文件的时候，弹出确认
-"禁止生成临时文件
-"搜索忽略大小写
-" 增强模式中的命令行自动完成操作
-" 使回格键（backspace）正常处理indent, eol, start等
-" 允许backspace和光标键跨越行边界
-" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
-" 通过使用: commands命令，告诉我们文件的哪一行被改变过
-" 在被分割的窗口间显示空白，便于阅读
-" 高亮显示匹配的括号
-" 匹配括号高亮的时间（单位是十分之一秒）
-" 光标移动到buffer的顶部和底部时保持3行距离
-" 为C程序提供自动缩进
 
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"键盘命令
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" shift tab pages
+" 选中状态下 Ctrl+c 复制
+let g:airline_section_gutter = '%{strftime("%H:%M")}%='
+let g:airline_section_x = 'ari%{airline#util#prepend(airline#extensions#tagbar#currenttag(),0)}%{airline#util#wrap(airline#parts#filetype(),0)}'
+let g:airline_section_y = ""
+let g:airline_section_z = '%3p%% %#__accent_bold#%{g:airline_symbols.linenr}%4l%#__restore__#%#__accent_bold#/%L%{g:airline_symbols.maxlinenr}%#__restore__# :%3v'
+"%{airline#util#wrap(airline#extensions#syntastic#get_error(),0)}%{airline#util#wrap(airline#extensions#eclim#get_warnings(),0)}
+"%{airline#util#wrap(airline#extensions#syntastic#get_warning(),0)}%{airline#util#wrap(airline#extensions#whitespace#check(),0)}
+let g:airline_solarized_bg='dark'
+let g:airline_powerline_fonts = 1
+let g:ctrlp_funky_syntax_highlight = 1
+let g:ctrlp_extensions = ['funky']
+let g:airline#extensions#tabline#enabled = 1 
+"列出当前目录文件  
+kk
+"C，C++ 按F5编译运行
+let Lib = " "
+let makeprg="clang\ %\ -o\ %< -Wextra\ -g\ -Wall"
+let exename = 1
 
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavArrows = 1
@@ -644,15 +638,16 @@ let g:ctrlp_follow_symlinks=1
 let g:ycm_semantic_triggers = {}
 " 引入 C++ 标准库tags
 let g:ycm_semantic_triggers.c = ['->', '.']
+let g:ycm_semantic_triggers.cpp = ['->', '.', '::']
 let g:ycm_semantic_triggers.lua=[':', '.']
-let g:ycm_semantic_triggers.python=['->']
+let g:ycm_semantic_triggers.python=['.']
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '<<'
 let g:ycm_error_symbol = '>>'
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_max_diagnostics_to_display = 60
-let g:ycm_min_num_of_chars_for_completion=2
+let g:ycm_min_num_of_chars_for_completion=3
 " 禁止缓存匹配项,每次都重新生成匹配项
 "let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
@@ -662,9 +657,11 @@ let g:ycm_seed_identifiers_with_syntax=1
 "easymotion 配置
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_startofline = 0 " keep cursor colum when JK motion
-let g:indent_guides_auto_colors = 1
+let g:indent_guides_auto_colors = 0
 let g:indent_guides_guide_size = 1 
 "hi CursorLine cterm=reverse ctermbg=242
+"
+
 "209 
 "highlight Functions
 "hi statuslineNC ctermfg=8
@@ -677,14 +674,15 @@ se mps+="=:;"
     " 色块宽度
     let g:indent_guides_guide_size=1
     " 快捷键 i 开/关缩进可视化
-:nmap  gz <Plug>IndentGuidesToggle
+nmap  gz <Plug>IndentGuidesToggle
+"let g:indent_guides_color_change_percent = 3
 
 
 "powerline setup 应该放在
 "set statusline后面
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+"python from powerline.vim import setup as powerline_setup
+"python powerline_setup()
+"python del powerline_setup
 let g:quickrun_config = {
 \   "_" : {
 \       "outputter" : "message",
@@ -702,7 +700,6 @@ map <F9> :QuickRun<CR>
 let NERDTreeWinSize=26
 let g:tagbar_bin='ctags'
 let g:tagbar_width=32
-let g:ycm_python_binary_path = '/usr/bin/python3.5'
 let g:html5_event_handler_attributes_complete = 0
 let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
@@ -732,9 +729,10 @@ let g:ycm_filetype_blacklist = {
 let g:ycm_collect_identifiers_from_tags_files = 1
 "let g:syntastic_always_populate_loc_list = 1
 let g:asyncrun_bell=1
-
-
 colorscheme SolarizedDark
+hi CursorLine       ctermfg=254 ctermbg=23  guifg=#e2e4e5 guibg=#073642 guisp=#073642 
+
+
 "打开文件类型检测, 加了这句才可以用智能补全
 "set completeopt=longest,menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -795,7 +793,7 @@ colorscheme SolarizedDark
 "let g:jedi#goto_assignments_command = "<leader>g"
 "let g:jedi#goto_definitions_command = ""
 "let g:jedi#documentation_command = "K"
-"let g:jedi#usages_command = "<leader>n"
+let g:jedi#usages_command = "<leader>n"
 "let g:jedi#completions_command = "<C-Space>"
 "let g:jedi#rename_command = "<leader>r"
 "hi pmenu ctermbg=23
@@ -834,8 +832,6 @@ colorscheme SolarizedDark
 " non github repos
 "Bundle 'Python-mode-klen'
 "Bundle 'JavaScript-Indent'
-Bundle 'Better-Javascript-Indentation'
-Plugin 'skywind3000/asyncrun.vim'
 "django
 "Bundle 'FredKSchott/CoVim'
 "Bundle 'djangojump'
@@ -873,6 +869,42 @@ Plugin 'skywind3000/asyncrun.vim'
 "inoremap <expr> <Up>       pumvisible() ? "\<C-P>" : "\<Up>"
 "inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-P>\<C-N>" : "\<PageDown>"
 "inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-P>\<C-N>" : "\<PageUp>"
+"当打开vim且没有文件时自动打开NERDTree
+" 只剩 NERDTree时自动关闭
+" 设置当文件被改动时自动载入
+" quickfix模式
+"代码补全 preview
+"set 
+"completeopt=menu 
+"允许插件  
+"共享剪贴板  
+"自动保存
+"hi CursorLine cterm=NONE ctermbg=black ctermfg=green guibg=black guifg=white
+"set foldcolumn=0
+""set foldmethod=indent 
+"set foldlevel=0 
+" 不要使用vi的键盘模式，而是vim自己的
+" 去掉输入错误的提示声音
+" 在处理未保存或只读文件的时候，弹出确认
+"禁止生成临时文件
+"搜索忽略大小写
+" 增强模式中的命令行自动完成操作
+" 使回格键（backspace）正常处理indent, eol, start等
+" 允许backspace和光标键跨越行边界
+" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+" 通过使用: commands命令，告诉我们文件的哪一行被改变过
+" 在被分割的窗口间显示空白，便于阅读
+" 高亮显示匹配的括号
+" 匹配括号高亮的时间（单位是十分之一秒）
+" 光标移动到buffer的顶部和底部时保持3行距离
+" 为C程序提供自动缩进
+
+
+hi IndentGuidesOdd guibg=#343f34 
+hi IndentGuidesEven guibg=#343f34
+
+Plugin 'Better-Javascript-Indentation'
+Plugin 'skywind3000/asyncrun.vim'
 Plugin 'suan/vim-instant-markdown'
 Plugin 'rdnetto/YCM-Generator' 
 Plugin 'jsbeautify'
@@ -903,6 +935,7 @@ Plugin 'synmark.vim'
 Plugin 'SQLComplete.vim'
 Plugin 'Javascript-OmniCompletion-with-YUI-and-j'
 "Plugin 'jslint.vim'
+Plugin 'vim-airline/vim-airline'
 Plugin 'pangloss/vim-javascript'
 Plugin 'Vim-Script-Updater'
 Plugin 'scrooloose/nerdcommenter'
@@ -920,4 +953,5 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'vim-signature'
 Plugin 'sjl/gundo.vim'
-
+hi clear CursorLine
+hi CursorLine       ctermfg=254 ctermbg=23  guifg=#e2e4e5 guibg=#073642 guisp=#073642

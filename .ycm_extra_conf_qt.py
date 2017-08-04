@@ -61,7 +61,8 @@ import os
 
 import ycm_core
 
-qt_file = "~/.Qt5.9/5.9/"
+qt_file = "~/.Qt/5.9.1/"
+
 # These are the compilation flags that will be used in case there's no
 
 # compilation database set (by default, one is not set).

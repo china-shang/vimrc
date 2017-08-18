@@ -169,6 +169,7 @@ nnoremap <leader>h :GundoToggle<CR>
 "自动补全
 nmap  <leader>cm :CommandT
 inoremap ( ()<ESC>i
+
 inoremap ) <C-R>=ClosePair(')')<CR>
 inoremap { {<CR>}<ESC>O
 inoremap [ []<ESC>i
@@ -625,7 +626,7 @@ let g:ctrlp_cmd = 'CtrlP'
 map <leader>p :CtrlPMRU<CR>
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/]\.(git|hg|svn|rvm)$',
-    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc)$',
+    \ 'file': '\v\.(exe|so|dll|zip|tar|tar.gz|pyc|cpp)$',
     \ }
 let g:ctrlp_working_path_mode=0
 let g:ctrlp_match_window_bottom=1
@@ -640,19 +641,19 @@ let g:ycm_semantic_triggers = {}
 let g:ycm_semantic_triggers.c = ['->', '.']
 let g:ycm_semantic_triggers.cpp = ['->', '.', '::']
 let g:ycm_semantic_triggers.lua=[':', '.']
-let g:ycm_semantic_triggers.python=['.']
+"let g:ycm_semantic_triggers.python=['.']
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_warning_symbol = '<<'
 let g:ycm_error_symbol = '>>'
 let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 let g:ycm_max_diagnostics_to_display = 60
-let g:ycm_min_num_of_chars_for_completion=3
+"let g:ycm_min_num_of_chars_for_completion=100
 " 禁止缓存匹配项,每次都重新生成匹配项
-"let g:ycm_cache_omnifunc=0
+let g:ycm_cache_omnifunc=0
 " 语法关键字补全         
 let g:ycm_confirm_extra_conf=0
-let g:ycm_seed_identifiers_with_syntax=1
+"let g:ycm_seed_identifiers_with_syntax=1
 " 开启语义补全
 "easymotion 配置
 let g:EasyMotion_smartcase = 1
@@ -717,7 +718,7 @@ let g:EclimCompletionMethod = 'omnifunc'
 se modifiable
 let g:instant_markdown_allow_unsafe_content = 1
 "let g:jedi#force_py_version = 3
-let g:jedi#squelch_py_warning= 0 
+"let g:jedi#squelch_py_warning= 0 
 let g:ycm_enable_diagnostic_highlighting = 0
 "let g:ycm_enable_diagnostic_signs = 0
 "let g:ycm_max_diagnostics_to_display = 0
@@ -726,7 +727,7 @@ let g:ycm_filetype_blacklist = {
       \ 'nerdtree' : 1,
       \}
 "let g:ycm_collect_identifiers_from_comments_and_strings = 0
-let g:ycm_collect_identifiers_from_tags_files = 1
+"let g:ycm_collect_identifiers_from_tags_files = 1
 "let g:syntastic_always_populate_loc_list = 1
 let g:asyncrun_bell=1
 colorscheme SolarizedDark
@@ -955,3 +956,4 @@ Plugin 'vim-signature'
 Plugin 'sjl/gundo.vim'
 hi clear CursorLine
 hi CursorLine       ctermfg=254 ctermbg=23  guifg=#e2e4e5 guibg=#073642 guisp=#073642
+nmap ,t :CtrlP
